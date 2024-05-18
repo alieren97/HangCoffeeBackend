@@ -7,8 +7,18 @@
 
 - [x] /auth/refreshToken
 
+## Cafe
+
+- [x] /cafes
+            .getAllCafe
+            .createCafe
+
+- [x] /cafes/:cafeId
+            .getCafe
+            .updateCafe
+            .deleteCafe
+
 ## TODO
-Cafe Endpoint
 
 Table Endpoint
 
