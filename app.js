@@ -35,8 +35,10 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
 
 const authRouter = require('./routers/auth.js')
 const refreshToken = require('./routers/refreshToken.js')
+const cafeRouter = require('./routers/cafe')
 
 /** api routes */
+app.use('/api/v1/cafes', cafeRouter)
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/auth/refreshToken', refreshToken)
 
@@ -48,7 +50,8 @@ app.all('*', (req, res, next) => {
 app.use(errorMiddleware)
 
 app.listen(config.PORT, () => {
-    console.log(`Server started on port ${config.PORT} in ${config.NODE_ENV} mode`)
+    console.log(`SERVER: Server started on port ${config.PORT} in ${config.NODE_ENV} mode`)
+    console.log(`SWAGGER: http://localhost:${config.PORT}/swagger/#/`)
 })
 
 //Handling unhandled promise rejection
