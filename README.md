@@ -10,16 +10,22 @@
 ## Cafe
 
 - [x] /cafes
-            .getAllCafe
-            .createCafe
+
+      .getAllCafe    
+      .createCafe
 
 - [x] /cafes/:cafeId
-            .getCafe
-            .updateCafe
-            .deleteCafe
+            
+      .getCafe
+      .updateCafe
+      .deleteCafe
 
 ## TODO
 
 Table Endpoint
 
 Comment Endpoint
+
+Food Endpoint
+
+Food Category Endpoint
