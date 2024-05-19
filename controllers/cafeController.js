@@ -2,6 +2,7 @@ const User = require('../models/user')
 const Cafe = require('../models/cafe.js')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const ErrorHandler = require('../utils/errorHandler')
+const { createCafeBodyValidation, updateCafeBodyValidation } = require('../utils/validationSchema')
 
 exports.getAllCafes = catchAsyncErrors(async (req, res, next) => {
     let cafes = await Cafe.find();
@@ -13,7 +14,6 @@ exports.getAllCafes = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getCafe = catchAsyncErrors(async (req, res, next) => {
-    console.log(req.params.cafeId)
     const cafe = await Cafe.findById(req.params.cafeId)
     if (!cafe) {
         return next(new ErrorHandler('Cafe not found', 404))
@@ -27,6 +27,10 @@ exports.getCafe = catchAsyncErrors(async (req, res, next) => {
 
 exports.createCafe = catchAsyncErrors(async (req, res, next) => {
     req.body.owner = req.user.id
+    const { error } = createCafeBodyValidation(req.body)
+    if (error)
+        return next(new ErrorHandler(error.details[0].message), 401)
+
     var cafe = await Cafe.findOne({ name: req.body.name })
     if (cafe) {
         return next(new ErrorHandler(`There is a cafe with the same name ${req.body.name}`, 404))
@@ -36,36 +40,39 @@ exports.createCafe = catchAsyncErrors(async (req, res, next) => {
     }
     res.status(200).json({
         success: true,
-        dialogType: "snackBar",
         message: "Cafe created",
         data: cafe
     })
 })
 
 exports.updateCafe = catchAsyncErrors(async (req, res, next) => {
-    let cafe = await Cafe.findById(req.params.id)
+    const cafe = await Cafe.findById(req.params.cafeId)
     if (!cafe) {
         return next(new ErrorHandler('Cafe not found', 404))
     }
-    cafe = await Cafe.findByIdAndUpdate(req.params.id, req.body, {
+
+    const { error } = updateCafeBodyValidation(req.body)
+    if(error)
+        return next(new ErrorHandler(error.details[0].message), 401)
+        
+    const updatedCafe = await Cafe.findByIdAndUpdate(req.params.cafeId, req.body, {
         new: true,
         runValidators: true,
     })
 
     res.status(200).json({
         success: true,
-        dialogType: "snackBar",
         message: 'Cafe is updated',
-        data: cafe
+        data: updatedCafe
     })
 })
 
 exports.deleteCafe = catchAsyncErrors(async (req, res, next) => {
-    let cafe = await Cafe.findById(req.params.id)
+    let cafe = await Cafe.findById(req.params.cafeId)
     if (!cafe) {
         return next(new ErrorHandler('Cafe not found', 404))
     }
-    cafe = await Cafe.findByIdAndDelete(req.params.id);
+    await Cafe.findByIdAndDelete(req.params.cafeId);
     res.status(200).json({
         success: true,
         dialogType: "snackBar",
