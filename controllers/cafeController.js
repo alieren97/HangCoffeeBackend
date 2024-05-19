@@ -5,7 +5,7 @@ const ErrorHandler = require('../utils/errorHandler')
 const { createCafeBodyValidation, updateCafeBodyValidation } = require('../utils/validationSchema')
 
 exports.getAllCafes = catchAsyncErrors(async (req, res, next) => {
-    let cafes = await Cafe.find();
+    const cafes = await Cafe.find();
     res.status(200).json({
         success: true,
         length: cafes.length,
@@ -52,9 +52,9 @@ exports.updateCafe = catchAsyncErrors(async (req, res, next) => {
     }
 
     const { error } = updateCafeBodyValidation(req.body)
-    if(error)
+    if (error)
         return next(new ErrorHandler(error.details[0].message), 401)
-        
+
     const updatedCafe = await Cafe.findByIdAndUpdate(req.params.cafeId, req.body, {
         new: true,
         runValidators: true,
@@ -68,14 +68,13 @@ exports.updateCafe = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.deleteCafe = catchAsyncErrors(async (req, res, next) => {
-    let cafe = await Cafe.findById(req.params.cafeId)
+    const cafe = await Cafe.findById(req.params.cafeId)
     if (!cafe) {
         return next(new ErrorHandler('Cafe not found', 404))
     }
     await Cafe.findByIdAndDelete(req.params.cafeId);
     res.status(200).json({
         success: true,
-        dialogType: "snackBar",
         message: `${cafe.name} Cafe is deleted`,
     })
 })
