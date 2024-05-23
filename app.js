@@ -37,12 +37,14 @@ const authRouter = require('./routers/auth.js')
 const refreshToken = require('./routers/refreshToken.js')
 const cafeRouter = require('./routers/cafe')
 const tableRouter = require('./routers/table')
+const commentRouter = require('./routers/comment.js')
 
 /** api routes */
 app.use('/api/v1/cafes', cafeRouter)
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/auth/refreshToken', refreshToken)
 app.use('/api/v1/tables', tableRouter)
+app.use('/api/v1/comments', commentRouter)
 
 // handle unhandled routes
 app.all('*', (req, res, next) => {

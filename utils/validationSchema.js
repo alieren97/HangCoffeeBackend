@@ -61,6 +61,14 @@ exports.createTableBodyValidation = (body) => {
     return schema.validate(body)
 }
 
+exports.createCommentBodyValidation = (body) => {
+    const schema = Joi.object({
+        message: Joi.string().min(3).max(100).required()
+    })
+
+    return schema.validate(body)
+}
+
 exports.updateTableBodyValidation = (body) => {
     const schema = Joi.object({
         tableName: Joi.string().min(3).max(30),
