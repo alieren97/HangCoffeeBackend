@@ -49,3 +49,24 @@ exports.updateCafeBodyValidation = (body) => {
 
     return schema.validate(body)
 }
+
+exports.createTableBodyValidation = (body) => {
+    const schema = Joi.object({
+        tableName: Joi.string().min(3).max(30).required(),
+        quota: Joi.number().required(),
+        tableInfo: Joi.string().min(5).max(50).required(),
+        cafe: Joi.string().min(5).max(50).required()
+    })
+
+    return schema.validate(body)
+}
+
+exports.updateTableBodyValidation = (body) => {
+    const schema = Joi.object({
+        tableName: Joi.string().min(3).max(30),
+        quota: Joi.number(),
+        tableInfo: Joi.string().min(5).max(50)
+    })
+
+    return schema.validate(body)
+}

@@ -20,9 +20,22 @@
       .updateCafe
       .deleteCafe
 
-## TODO
+## Table Endpoint
 
-Table Endpoint
+- [x] /tables/:cafeId
+
+      .getTables
+      .postTable
+
+
+- [x] /tables/:tableId
+
+      .getTable
+      .deleteTable
+      .updateTable
+
+      
+## TODO
 
 Comment Endpoint
 
