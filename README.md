@@ -20,7 +20,7 @@
       .updateCafe
       .deleteCafe
 
-## Table Endpoint
+## Table Endpoint
 
 - [x] /tables/:cafeId
 
@@ -34,11 +34,41 @@
       .deleteTable
       .updateTable
 
+## Comment Endpoint
+- [x] /comment/:cafeId
+
+      .getComments
+      .createComment
+
+- [x] /comment/:commentId
+
+      .deleteComment
+
+## Food Endpoint
+- [x] /food/:cafeId
+
+      .getFoods
+
+- [x] /food/:foodId
+
+      .getFood
+      .updateFood
+      .deleteFood
+
+- [x] /food/:cafeId/foodCategory/:categoryId
+
+      .createFood
+
+## Food Category Endpoint
+- [x] /foodCategory/:cafeId
+
+      .getCategories
+      .addCategory
+- [x] /foodCategory/:cafeId/:categoryId
+
+      .getCategory
+      .updateCategory
+      .deleteCategory
       
 ## TODO
-
-Comment Endpoint
-
-Food Endpoint
-
-Food Category Endpoint
+### Deploy the project into docket
