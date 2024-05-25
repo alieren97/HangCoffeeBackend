@@ -69,6 +69,27 @@ exports.createCommentBodyValidation = (body) => {
     return schema.validate(body)
 }
 
+exports.createFoodCategoryBodyValidation = (body) => {
+    const schema = Joi.object({
+        categoryName: Joi.string().min(3).max(50).required(),
+        categoryImage: Joi.string().min(3).max(200).required()
+    })
+
+    return schema.validate(body)
+}
+
+exports.createFoodBodyValidation = (body) => {
+    const schema = Joi.object({
+        foodImage: Joi.string().min(3).max(200).required(),
+        foodName: Joi.string().min(3).max(50).required(),
+        price: Joi.number().required(),
+        cafe: Joi.string().min(3).max(50).required(),
+        foodCategory: Joi.string().min(3).max(50).required(),
+    })
+
+    return schema.validate(body)
+}
+
 exports.updateTableBodyValidation = (body) => {
     const schema = Joi.object({
         tableName: Joi.string().min(3).max(30),
