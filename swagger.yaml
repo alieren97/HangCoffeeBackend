@@ -1,0 +1,1248 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Hang Coffee API
+  description: >
+    API endpoints for a Hang Coffee App services documented on swagger
+servers:
+  - url: http://localhost:8080/api/v1
+    description: dev server
+  - url: http://localhost:4000/api/v1
+    description: prod server
+components:
+  schemas:
+    Cafe:
+      properties:
+        _id:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        name:
+          type: string
+          example: Baracca
+        image:
+          type: array
+          items:
+            type: string
+            example: https://biyudum.com/images/slider/s178mxor2t.jpg
+        working_hours:
+          type: string
+          example: 09.30-00.30
+        cafe_type:
+          type: string
+          example: Cafe
+        ratings:
+          type: integer
+          example: 4.4
+        about:
+          type: string
+          example: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+    Table:
+      properties:
+        _id:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        tableName:
+          type: string
+          example: B-4
+        quota:
+          type: integer
+          example: 4
+        tableInfo:
+          type: string
+          example: This table reserved for 4 person
+    Comment:
+      properties:
+        _id:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        messsage:
+          type: string
+          example: This cafe's brownies so hot
+        createdAt:
+          type: string
+          example: "03.04.04"
+    FoodCategory:
+      properties:
+        _id:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        cafe:
+          type: object
+          $ref: "#/components/schemas/Cafe"
+        categoryImage:
+          type: string
+          example: test.image
+        categoryName:
+          type: string
+          example: Burgers
+    Food:
+      properties:
+        _id:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        cafe:
+          type: object
+          $ref: "#/components/schemas/Cafe"
+        foodImage:
+          type: string
+          example: test.image
+        foodName:
+          type: string
+          example: Jays Burger
+        price:
+          type: integer
+          example: 100
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      description: JWT Authorization
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
+
+paths:
+  /auth/register:
+    post:
+      tags: [Auth]
+      description: >
+        Hang Coffee Register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+                - confirmPassword
+              properties:
+                name:
+                  type: string
+                  default: Ali Eren
+                email:
+                  type: string
+                  default: alierenswagger5@gmail.com
+                password:
+                  type: string
+                  default: alierenswagger5
+                confirmPassword:
+                  type: string
+                  default: alierenswagger5
+              example:
+                name: alierenswagger5
+                email: alierenswagger5@gmail.com
+                password: alierenswagger5
+                confirmPassword: alierenswagger5
+      responses:
+        "201":
+          description: It will return Bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Account created sucessfully
+        "401":
+          description: It will return error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User with given email already exist"
+                  error:
+                    type: object
+                    properties:
+                      statusCode:
+                        type: integer
+                        example: 401
+                      status:
+                        type: string
+                        example: fail
+  /auth/login:
+    post:
+      tags: [Auth]
+      description: >
+        Hang Coffee Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  default: alierenswagger5@gmail.com
+                password:
+                  type: string
+                  default: alierenswagger5
+              example:
+                email: alierenswagger5@gmail.com
+                password: alierenswagger5
+      responses:
+        "200":
+          description: It will Bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Login succesfull"
+                  data:
+                    type: object
+                    properties:
+                      accessToken:
+                        type: string
+                        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MmQ2ODEyYTk2ZjQ4YTkwZmEyNWUyOSIsImlhdCI6MTcxNDI1MTc5NCwiZXhwIjoxNzE0ODU2NTk0fQ.oHm6BeeuMj8p6FkPdGP-CN9X0W760d8_OuG2sNp3b-4
+                      refreshToken:
+                        type: string
+                        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MmQ2ODEyYTk2ZjQ4YTkwZmEyNWUyOSIsImlhdCI6MTcxNDI1MTc5NCwiZXhwIjoxNzE0ODU2NTk0fQ.oHm6BeeuMj8p6FkPdGP-CN9X0W760d8_OuG2sNp3b-4
+                      token_type:
+                        type: string
+                        example: Bearer
+        "401":
+          description: It will return Unauthorized errror
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Invalid Email or password"
+                  error:
+                    type: object
+                    properties:
+                      statusCode:
+                        type: integer
+                        example: 401
+                      status:
+                        type: string
+                        example: fail
+  /auth/refreshToken/{refreshToken}:
+    post:
+      tags: [Auth]
+      description: >
+        Hang Coffee Get AccessToken via RefreshToken
+      summary: Hang Coffee Get AccessToken via RefreshToken
+      parameters:
+        - in: path
+          name: refreshToken
+          schema:
+            type: string
+          required: true
+          description: refresh token to refresh access token
+      responses:
+        "200":
+          description: It will return new access token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Access token created successfully"
+                  data:
+                    type: object
+                    properties:
+                      accessToken:
+                        type: string
+                        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MmQ2ODEyYTk2ZjQ4YTkwZmEyNWUyOSIsImlhdCI6MTcxNDI1MTc5NCwiZXhwIjoxNzE0ODU2NTk0fQ.oHm6BeeuMj8p6FkPdGP-CN9X0W760d8_OuG2sNp3b-4
+        "401":
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Invalid refresh token"
+                  error:
+                    type: object
+                    properties:
+                      error:
+                        type: boolean
+                        example: true
+                      message:
+                        type: string
+                        example: Invalid refresh token
+                      statusCode:
+                        type: integer
+                        example: 401
+    delete:
+      tags: [Auth]
+      description: >
+        Hang Coffee Logout
+      summary: Hang Coffee Logout via refreshToken
+      parameters:
+        - in: path
+          name: refreshToken
+          schema:
+            type: string
+          required: true
+          description: refresh token to refresh access token
+      responses:
+        "200":
+          description: It will Bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Login succesfull"
+                  data:
+                    type: object
+                    properties:
+                      accessToken:
+                        type: string
+                        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MmQ2ODEyYTk2ZjQ4YTkwZmEyNWUyOSIsImlhdCI6MTcxNDI1MTc5NCwiZXhwIjoxNzE0ODU2NTk0fQ.oHm6BeeuMj8p6FkPdGP-CN9X0W760d8_OuG2sNp3b-4
+  /auth/me:
+    get:
+      tags: [Auth]
+      description: >
+        Hang Coffee Get User Profile Information
+      summary: Hang Coffee Get User Profile Information
+      responses:
+        "200":
+          description: Return User data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                            example: 6647db8750f3f8ab054aad1a
+                          name:
+                            type: string
+                            example: Alii Eren
+                          email:
+                            type: string
+                            example: alierensh333@gmail.com
+  /cafes:
+    get:
+      tags: [Cafe]
+      description: >
+        Hang Coffee Get Cafes
+      summary: Hang Coffee Get Cafe List
+      responses:
+        "200":
+          description: It will return cafe list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 4
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Cafe"
+    post:
+      tags: [Cafe]
+      description: >
+        Hang Coffee Create Cafe
+      summary: Hang Coffee Create a Cafe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - image
+                - working_hours
+                - cafe_type
+                - ratings
+              properties:
+                name:
+                  type: string
+                  default: Bear&Hall
+                image:
+                  type: array
+                  items:
+                    type: string
+                    default: "https://media.timeout.com/images/105164311/image.jpg"
+                working_hours:
+                  type: string
+                  default: 17.30-04.30
+                cafe_type:
+                  type: string
+                  default: Pub
+                ratings:
+                  type: integer
+                  default: 4.4
+              example:
+                name: "Bear&Hall"
+                image:
+                  [
+                    "https://media.timeout.com/images/105164311/image.jpg",
+                    "https://www.meyhankoli.com/img/places/source_seo/beerhall-0.jpg",
+                    "https://fastly.4sqi.net/img/general/600x600/38701219_vDVfisKtMpZW14FA8B18Yki0w1XEbWFMP8DFnBob-1Y.jpg",
+                  ]
+                working_hours: "17.30-04.30"
+                cafe_type: "Pub"
+                ratings: 4.4
+      responses:
+        "200":
+          description: It will Bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  dialogType:
+                    type: string
+                    example: snackBar
+                  message:
+                    type: string
+                    example: Cafe Created
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Cafe"
+  /cafes/{cafeId}:
+    get:
+      tags: [Cafe]
+      summary: Hang Coffee Get Cafe
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+      responses:
+        "200":
+          description: It will return cafe list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Cafe"
+    delete:
+      tags: [Cafe]
+      summary: Hang Coffee Delete Cafe
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+      responses:
+        "200":
+          description: Cafe deleted succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  dialogType:
+                    type: string
+                    example: snackBar
+                  message:
+                    type: string
+                    example: "Cafe is deleted"
+    put:
+      tags: [Cafe]
+      summary: Hang Coffee Update Cafe
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - image
+                - working_hours
+                - cafe_type
+                - ratings
+              properties:
+                name:
+                  type: string
+                  default: Bear&Hall
+                image:
+                  type: array
+                  items:
+                    type: string
+                    default: "https://media.timeout.com/images/105164311/image.jpg"
+                working_hours:
+                  type: string
+                  default: 17.30-04.30
+                cafe_type:
+                  type: string
+                  default: Pub
+                ratings:
+                  type: integer
+                  default: 4.4
+              example:
+                name: "Bear&Hall"
+                image:
+                  [
+                    "https://media.timeout.com/images/105164311/image.jpg",
+                    "https://www.meyhankoli.com/img/places/source_seo/beerhall-0.jpg",
+                    "https://fastly.4sqi.net/img/general/600x600/38701219_vDVfisKtMpZW14FA8B18Yki0w1XEbWFMP8DFnBob-1Y.jpg",
+                  ]
+                working_hours: "17.30-04.30"
+                cafe_type: "Pub"
+                ratings: 4.4
+      responses:
+        "200":
+          description: Cafe deleted succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  dialogType::
+                    type: string
+                    example: snackBar
+                  message:
+                    type: string
+                    example: "Cafe is deleted"
+  /tables/{cafeId}:
+    get:
+      tags: [Table]
+      description: >
+        Hang Coffee Get Tables for specific Cafe
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+      responses:
+        "200":
+          description: It will return cafe list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 4
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Table"
+    post:
+      tags: [Table]
+      description: >
+        Hang Coffee Create Table for a specific Cafe
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - tableName
+                - quota
+                - tableInfo
+              properties:
+                tableName:
+                  type: string
+                  default: B-4
+                quota:
+                  type: string
+                  default: 4
+                tableInfo:
+                  type: string
+                  default: This table reserved for 4 person
+              example:
+                tableName: B-4
+                quota: 4
+                tableInfo: This table reserved for 4 person
+      responses:
+        "201":
+          description: Table created succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Table"
+  /tables/{cafeId}/{tableId}:
+    get:
+      tags: [Table]
+      description: >
+        Hang Coffee Get A Specific Table
+      summary: Hang Coffee Get A Specific Table
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+        - in: path
+          name: tableId
+          schema:
+            type: string
+          required: true
+          description: The id of table
+      responses:
+        "201":
+          description: Table fetch succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Table"
+    delete:
+      tags: [Table]
+      description: >
+        Hang Coffee Delete A Specific Table
+      summary: Hang Coffee Delete A Specific Table
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+        - in: path
+          name: tableId
+          schema:
+            type: string
+          required: true
+          description: The id of table
+      responses:
+        "200":
+          description: Table deleted succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Table deleted succesfully
+    put:
+      tags: [Table]
+      description: >
+        Hang Coffee Update A Specific Table
+      summary: Hang Coffee Update A Specific Table
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+        - in: path
+          name: tableId
+          schema:
+            type: string
+          required: true
+          description: The id of table
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - tableName
+                - quota
+                - tableInfo
+              properties:
+                tableName:
+                  type: string
+                  default: B-4
+                quota:
+                  type: string
+                  default: 4
+                tableInfo:
+                  type: string
+                  default: This table reserved for 4 person
+              example:
+                tableName: B-4
+                quota: 4
+                tableInfo: This table reserved for 4 person
+      responses:
+        "200":
+          description: Table updated succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Table updated succesfully
+                  
+  /comments/{cafeId}:
+    get:
+      tags: [Comment]
+      description: >
+        Get Comments for specific Cafe
+      summary: Get Comments for specific Cafe
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+      responses:
+        "200":
+          description: It will return cafe list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 4
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Comment"
+    post:
+      tags: [Comment]
+      description: >
+        Create a Comment for a specific Cafe
+      summary: Create a Comment for a specific Cafe
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  default: This cafe so hot
+              example:
+                message: This cafe so hot
+      responses:
+        "201":
+          description: Comment created succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Table"
+  /comments/{commentId}:
+    delete:
+      tags: [Comment]
+      description: >
+        Delete specific comment
+      summary: Delete specific comment
+      parameters:
+        - in: path
+          name: commentId
+          schema:
+            type: string
+          required: true
+          description: The id of comment
+      responses:
+        "200":
+          description: It will return success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Comment is deleted
+  /foodCategory/{cafeId}:
+    get:
+      tags: [Food Category]
+      description: >
+        Hang Coffee Get Food Categories By Cafe
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+      responses:
+        "200":
+          description: It will return cafe list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 4
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/FoodCategory"
+    post:
+      tags: [Food Category]
+      description: >
+        Hang Coffee Create a  Food Category By Cafe
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+              properties:
+                categoryImage:
+                  type: string
+                  default: Burgers
+                categoryName:
+                  type: string
+                  default: Burgers
+              example:
+                categoryImage: Burgers
+                categoryName: Burgers
+      responses:
+        "201":
+          description: Comment created succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/FoodCategory"
+  /foodCategory/{cafeId}/{categoryId}:
+    get:
+      tags: [Food Category]
+      description: >
+        Hang Coffee Get Food Category By Cafe Id and Category Id
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+        - in: path
+          name: categoryId
+          schema:
+            type: string
+          required: true
+          description: The id of category
+      responses:
+        "200":
+          description: It will return cafe list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 4
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/FoodCategory"
+    put:
+      tags: [Food Category]
+      description: >
+        Hang Coffee Update a Food Category By CafeId and CategoryId
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+        - in: path
+          name: categoryId
+          schema:
+            type: string
+          required: true
+          description: The id of category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+              properties:
+                categoryImage:
+                  type: string
+                  default: Burgers
+                categoryName:
+                  type: string
+                  default: Burgers
+              example:
+                categoryImage: Burgers
+                categoryName: Burgers
+      responses:
+        "200":
+          description: Category updated succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/FoodCategory"
+    delete:
+      tags: [Food Category]
+      description: >
+        Hang Coffee Delete a Food Category By Cafe Id and Category Id
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+        - in: path
+          name: categoryId
+          schema:
+            type: string
+          required: true
+          description: The id of category
+      responses:
+        "200":
+          description: Category deleted succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+  /food/{foodId}:
+    get:
+      tags: [Food]
+      description: >
+        Hang Coffee Get Food By FoodId
+      parameters:
+        - in: path
+          name: foodId
+          schema:
+            type: string
+            minimum: 1
+          required: true
+          description: The id of food
+      responses:
+        "200":
+          description: It will return food
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 4
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/FoodCategory"
+    put:
+      tags: [Food]
+      description: >
+        Hang Coffee Update a Food By Food Id
+      parameters:
+        - in: path
+          name: foodId
+          schema:
+            type: string
+            minimum: 1
+          required: true
+          description: The id of food
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+              properties:
+                foodImage:
+                  type: string
+                  default: Burgers
+                foodName:
+                  type: string
+                  default: Burgers
+                price:
+                  type: integer
+                  default: 100
+              example:
+                foodImage: burgers.jpeg
+                foodName: Jays Burger
+                price: 100
+      responses:
+        "200":
+          description: Food updated succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: food updated succesfully
+    delete:
+      tags: [Food]
+      description: >
+        Hang Coffee Delete a Food By Food Id
+      parameters:
+        - in: path
+          name: foodId
+          schema:
+            type: string
+            minimum: 1
+          required: true
+          description: The id of food
+      responses:
+        "200":
+          description: Food deleted succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: food delete succesfully
+  /food/{cafeId}/foodCategory/{categoryId}:
+    post:
+      tags: [Food]
+      description: >
+        Hang Coffee Create a Food By Cafe Id and Category Id
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+        - in: path
+          name: categoryId
+          schema:
+            type: string
+          required: true
+          description: The id of food
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+              properties:
+                foodImage:
+                  type: string
+                  default: Burgers
+                foodName:
+                  type: string
+                  default: Burgers
+                price:
+                  type: integer
+                  default: 100
+              example:
+                foodImage: burgers.jpeg
+                foodName: Jays Burger
+                price: 100
+      responses:
+        "200":
+          description: Food created succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: food created succesfully
+  /food/{cafeId}:
+    get:
+      tags: [Food]
+      description: >
+        Hang Coffee Get All Foods By Cafe
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+      responses:
+        "200":
+          description: It will return foods
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 4
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Food"

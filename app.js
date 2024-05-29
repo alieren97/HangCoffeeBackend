@@ -5,10 +5,10 @@ const morgan = require('morgan')
 const connectDatabase = require('./config/database')
 const errorMiddleware = require('./middlewares/error')
 const ErrorHandler = require('./utils/errorHandler.js')
-const swaggerUI = require('swagger-ui-express')
 const YAML = require('yamljs')
+const swaggerUI = require('swagger-ui-express')
 const swaggerDoc = YAML.load('./swagger.yaml')
-const config = require('./config.js');
+const config = require('./config/configs.js');
 const rateLimit = require("express-rate-limit");
 
 process.on('uncaughtException', err => {
@@ -23,15 +23,17 @@ const limiter = rateLimit({
 });
 
 //connecting to database
-connectDatabase(config.DB_URI)
+connectDatabase()
 
 /** middlewares */
+app.enable("trust proxy")
 app.use(express.json());
 app.use(limiter);
 app.use(cors());
 app.use(morgan('tiny'));
 app.disable('x-powered-by'); // less hackers know about our stack
-app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
+app.use('/swagger/docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
+
 
 const authRouter = require('./routers/auth.js')
 const refreshToken = require('./routers/refreshToken.js')
@@ -59,7 +61,7 @@ app.use(errorMiddleware)
 
 app.listen(config.PORT, () => {
     console.log(`SERVER: Server started on port ${config.PORT} in ${config.NODE_ENV} mode`)
-    console.log(`SWAGGER: http://localhost:${config.PORT}/swagger/#/`)
+    console.log(`SWAGGER: http://localhost:${config.PORT}/swagger/docs/#/`)
 })
 
 //Handling unhandled promise rejection
