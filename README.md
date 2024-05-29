@@ -69,6 +69,9 @@
       .getCategory
       .updateCategory
       .deleteCategory
-      
+## Deploy the project into docket
+      Can see the swagger documentation from the link
+      - http://3.87.155.198/swagger/docs/      
+
 ## TODO
-### Deploy the project into docket
+
