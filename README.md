@@ -74,4 +74,4 @@
       - http://3.87.155.198/swagger/docs/      
 
 ## TODO
-
+- Localization
