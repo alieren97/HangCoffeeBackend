@@ -106,7 +106,8 @@ paths:
     post:
       tags: [Auth]
       description: >
-        Hang Coffee Register
+        User Registeration
+      summary: User Registeration
       requestBody:
         required: true
         content:
@@ -121,21 +122,21 @@ paths:
               properties:
                 name:
                   type: string
-                  default: Ali Eren
+                  default: Test User
                 email:
                   type: string
-                  default: alierenswagger5@gmail.com
+                  default: testuser1@gmail.com
                 password:
                   type: string
-                  default: alierenswagger5
+                  default: testuser1
                 confirmPassword:
                   type: string
-                  default: alierenswagger5
+                  default: testuser1
               example:
-                name: alierenswagger5
-                email: alierenswagger5@gmail.com
-                password: alierenswagger5
-                confirmPassword: alierenswagger5
+                name: Test User
+                email: testuser1@gmail.com
+                password: testuser1
+                confirmPassword: testuser1
       responses:
         "201":
           description: It will return Bearer token
@@ -176,7 +177,8 @@ paths:
     post:
       tags: [Auth]
       description: >
-        Hang Coffee Login
+        User Login
+      summary: User Login
       requestBody:
         required: true
         content:
@@ -189,13 +191,13 @@ paths:
               properties:
                 email:
                   type: string
-                  default: alierenswagger5@gmail.com
+                  default: testuser1@gmail.com
                 password:
                   type: string
-                  default: alierenswagger5
+                  default: testuser1
               example:
-                email: alierenswagger5@gmail.com
-                password: alierenswagger5
+                email: testuser1@gmail.com
+                password: testuser1
       responses:
         "200":
           description: It will Bearer token
@@ -248,8 +250,8 @@ paths:
     post:
       tags: [Auth]
       description: >
-        Hang Coffee Get AccessToken via RefreshToken
-      summary: Hang Coffee Get AccessToken via RefreshToken
+        Get AccessToken via RefreshToken
+      summary: Get AccessToken via RefreshToken
       parameters:
         - in: path
           name: refreshToken
@@ -305,8 +307,8 @@ paths:
     delete:
       tags: [Auth]
       description: >
-        Hang Coffee Logout
-      summary: Hang Coffee Logout via refreshToken
+        User Logout
+      summary: Logout via refreshToken
       parameters:
         - in: path
           name: refreshToken
@@ -338,8 +340,8 @@ paths:
     get:
       tags: [Auth]
       description: >
-        Hang Coffee Get User Profile Information
-      summary: Hang Coffee Get User Profile Information
+        Get User Profile Information
+      summary: Get User Profile Information
       responses:
         "200":
           description: Return User data
@@ -362,10 +364,66 @@ paths:
                             example: 6647db8750f3f8ab054aad1a
                           name:
                             type: string
-                            example: Alii Eren
+                            example: Test User
                           email:
                             type: string
-                            example: alierensh333@gmail.com
+                            example: testuser1@gmail.com
+                          role:
+                            type: array
+                            items: 
+                              type: string
+                              default: user
+        "401":
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Invalid access token"
+                  error:
+                    type: object
+                    properties:
+                      error:
+                        type: boolean
+                        example: true
+                      message:
+                        type: string
+                        example: Invalid access token
+                      statusCode:
+                        type: integer
+                        example: 401
+  /admin/updateRole/{userId}:
+    get:
+      tags: [Admin]
+      summary: Update user role
+      description: Update user role
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: The id of user
+      responses:
+        "200":
+          description: It will return cafe list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Cafe"
   /cafes:
     get:
       tags: [Cafe]
@@ -776,7 +834,7 @@ paths:
                   message:
                     type: string
                     example: Table updated succesfully
-                  
+
   /comments/{cafeId}:
     get:
       tags: [Comment]
