@@ -10,7 +10,7 @@ const mongoUrl = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_
 const connectDatabase = async () => {
     try {
         await mongoose.connect(mongoUrl, {});
-        console.log(`DATABASE: Connected to database successfully: ${mongoUrl}`);
+        console.log(`DATABASE: Connected to database successfully`);
     } catch (error) {
         console.error('DATABASE: Could not connect to database:', error.message);
         setTimeout(connectDatabase, 5000)

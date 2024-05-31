@@ -50,6 +50,17 @@ components:
         tableInfo:
           type: string
           example: This table reserved for 4 person
+    User:
+      properties:
+        _id:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        name:
+          type: string
+          example: Admin User
+        email:
+          type: string
+          example:  admin1@gmail.com
     Comment:
       properties:
         _id:
@@ -399,7 +410,7 @@ paths:
                         type: integer
                         example: 401
   /admin/updateRole/{userId}:
-    get:
+    put:
       tags: [Admin]
       summary: Update user role
       description: Update user role
@@ -412,7 +423,7 @@ paths:
           description: The id of user
       responses:
         "200":
-          description: It will return cafe list
+          description: It will return success message
           content:
             application/json:
               schema:
@@ -421,9 +432,101 @@ paths:
                   success:
                     type: boolean
                     example: true
+                  message:
+                    type: string
+                    example: "... role added into roles as ..."
+        "400":
+          description: User already has the role error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User already has the role"
+        "404":
+          description: User not found error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User not found"
+  /admin/users:
+    get:
+      tags: [Admin]
+      summary: Get Users list
+      description: Get Users list
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 10
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/User"
+  /admin/users/{userId}:
+    get:
+      tags: [Admin]
+      summary: Get user with spesific id
+      description: Get user with spesific id
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: The id of user
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: null
                   data:
                     type: object
-                    $ref: "#/components/schemas/Cafe"
+                    $ref: "#/components/schemas/User"
+        "404":
+          description: User not found error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User not found"
   /cafes:
     get:
       tags: [Cafe]

@@ -17,5 +17,3 @@ const verifyRefreshToken = async (refreshToken) => {
 };
 
 module.exports = verifyRefreshToken
-
-
