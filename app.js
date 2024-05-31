@@ -62,7 +62,7 @@ app.all('*', (req, res, next) => {
 app.use(errorMiddleware)
 
 app.listen(config.PORT, () => {
-    console.log(`SERVER: Server started on port ${config.PORT} in ${config.NODE_ENV} mode`)
+    console.log(`SERVER: Serverr started on port ${config.PORT} in ${config.NODE_ENV} mode`)
     console.log(`SWAGGER: http://localhost:${config.PORT}/swagger/docs/#/`)
 })
 

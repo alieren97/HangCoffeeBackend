@@ -568,7 +568,8 @@ paths:
                 - image
                 - working_hours
                 - cafe_type
-                - ratings
+                - address
+                - about
               properties:
                 name:
                   type: string
@@ -584,9 +585,12 @@ paths:
                 cafe_type:
                   type: string
                   default: Pub
-                ratings:
-                  type: integer
-                  default: 4.4
+                address:
+                  type: string
+                  default: Türkali, Türkali Mahallesi Ihlamurdere Caddesi, Misirli Bahçe Sk. No:4/A, 34357 Beşiktaş/İstanbul
+                about:
+                  type: string
+                  default: Should be less than 150 char
               example:
                 name: "Bear&Hall"
                 image:
@@ -597,7 +601,8 @@ paths:
                   ]
                 working_hours: "17.30-04.30"
                 cafe_type: "Pub"
-                ratings: 4.4
+                address: "Türkali, Türkali Mahallesi Ihlamurdere Caddesi, Misirli Bahçe Sk. No:4/A, 34357 Beşiktaş/İstanbul"
+                about: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy "
       responses:
         "200":
           description: It will Bearer token
