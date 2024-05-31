@@ -14,6 +14,7 @@ services:
         NODE_ENV: ${NODE_ENV}
         MONGO_USER: ${MONGO_USER}
         MONGO_PASSWORD: ${MONGO_PASSWORD}
+    image: alierensh3/hangcoffee-dev
     volumes:
       - ./:/app:ro
       - /app/node_modules

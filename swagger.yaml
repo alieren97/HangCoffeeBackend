@@ -50,6 +50,17 @@ components:
         tableInfo:
           type: string
           example: This table reserved for 4 person
+    User:
+      properties:
+        _id:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        name:
+          type: string
+          example: Admin User
+        email:
+          type: string
+          example:  admin1@gmail.com
     Comment:
       properties:
         _id:
@@ -106,7 +117,8 @@ paths:
     post:
       tags: [Auth]
       description: >
-        Hang Coffee Register
+        User Registeration
+      summary: User Registeration
       requestBody:
         required: true
         content:
@@ -121,21 +133,21 @@ paths:
               properties:
                 name:
                   type: string
-                  default: Ali Eren
+                  default: Test User
                 email:
                   type: string
-                  default: alierenswagger5@gmail.com
+                  default: testuser1@gmail.com
                 password:
                   type: string
-                  default: alierenswagger5
+                  default: testuser1
                 confirmPassword:
                   type: string
-                  default: alierenswagger5
+                  default: testuser1
               example:
-                name: alierenswagger5
-                email: alierenswagger5@gmail.com
-                password: alierenswagger5
-                confirmPassword: alierenswagger5
+                name: Test User
+                email: testuser1@gmail.com
+                password: testuser1
+                confirmPassword: testuser1
       responses:
         "201":
           description: It will return Bearer token
@@ -176,7 +188,8 @@ paths:
     post:
       tags: [Auth]
       description: >
-        Hang Coffee Login
+        User Login
+      summary: User Login
       requestBody:
         required: true
         content:
@@ -189,13 +202,13 @@ paths:
               properties:
                 email:
                   type: string
-                  default: alierenswagger5@gmail.com
+                  default: testuser1@gmail.com
                 password:
                   type: string
-                  default: alierenswagger5
+                  default: testuser1
               example:
-                email: alierenswagger5@gmail.com
-                password: alierenswagger5
+                email: testuser1@gmail.com
+                password: testuser1
       responses:
         "200":
           description: It will Bearer token
@@ -248,8 +261,8 @@ paths:
     post:
       tags: [Auth]
       description: >
-        Hang Coffee Get AccessToken via RefreshToken
-      summary: Hang Coffee Get AccessToken via RefreshToken
+        Get AccessToken via RefreshToken
+      summary: Get AccessToken via RefreshToken
       parameters:
         - in: path
           name: refreshToken
@@ -305,8 +318,8 @@ paths:
     delete:
       tags: [Auth]
       description: >
-        Hang Coffee Logout
-      summary: Hang Coffee Logout via refreshToken
+        User Logout
+      summary: Logout via refreshToken
       parameters:
         - in: path
           name: refreshToken
@@ -338,8 +351,8 @@ paths:
     get:
       tags: [Auth]
       description: >
-        Hang Coffee Get User Profile Information
-      summary: Hang Coffee Get User Profile Information
+        Get User Profile Information
+      summary: Get User Profile Information
       responses:
         "200":
           description: Return User data
@@ -362,10 +375,158 @@ paths:
                             example: 6647db8750f3f8ab054aad1a
                           name:
                             type: string
-                            example: Alii Eren
+                            example: Test User
                           email:
                             type: string
-                            example: alierensh333@gmail.com
+                            example: testuser1@gmail.com
+                          role:
+                            type: array
+                            items: 
+                              type: string
+                              default: user
+        "401":
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Invalid access token"
+                  error:
+                    type: object
+                    properties:
+                      error:
+                        type: boolean
+                        example: true
+                      message:
+                        type: string
+                        example: Invalid access token
+                      statusCode:
+                        type: integer
+                        example: 401
+  /admin/updateRole/{userId}:
+    put:
+      tags: [Admin]
+      summary: Update user role
+      description: Update user role
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: The id of user
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "... role added into roles as ..."
+        "400":
+          description: User already has the role error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User already has the role"
+        "404":
+          description: User not found error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User not found"
+  /admin/users:
+    get:
+      tags: [Admin]
+      summary: Get Users list
+      description: Get Users list
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 10
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/User"
+  /admin/users/{userId}:
+    get:
+      tags: [Admin]
+      summary: Get user with spesific id
+      description: Get user with spesific id
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: The id of user
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: null
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/User"
+        "404":
+          description: User not found error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User not found"
   /cafes:
     get:
       tags: [Cafe]
@@ -407,7 +568,8 @@ paths:
                 - image
                 - working_hours
                 - cafe_type
-                - ratings
+                - address
+                - about
               properties:
                 name:
                   type: string
@@ -423,9 +585,12 @@ paths:
                 cafe_type:
                   type: string
                   default: Pub
-                ratings:
-                  type: integer
-                  default: 4.4
+                address:
+                  type: string
+                  default: Türkali, Türkali Mahallesi Ihlamurdere Caddesi, Misirli Bahçe Sk. No:4/A, 34357 Beşiktaş/İstanbul
+                about:
+                  type: string
+                  default: Should be less than 150 char
               example:
                 name: "Bear&Hall"
                 image:
@@ -436,7 +601,8 @@ paths:
                   ]
                 working_hours: "17.30-04.30"
                 cafe_type: "Pub"
-                ratings: 4.4
+                address: "Türkali, Türkali Mahallesi Ihlamurdere Caddesi, Misirli Bahçe Sk. No:4/A, 34357 Beşiktaş/İstanbul"
+                about: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy "
       responses:
         "200":
           description: It will Bearer token
@@ -776,7 +942,7 @@ paths:
                   message:
                     type: string
                     example: Table updated succesfully
-                  
+
   /comments/{cafeId}:
     get:
       tags: [Comment]

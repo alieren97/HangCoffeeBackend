@@ -42,6 +42,7 @@ const tableRouter = require('./routers/table')
 const commentRouter = require('./routers/comment.js')
 const foodCategoryRouter = require('./routers/foodCategory.js')
 const foodRouter = require('./routers/food.js')
+const adminRouter = require('./routers/admin.js')
 
 /** api routes */
 app.use('/api/v1/cafes', cafeRouter)
@@ -51,6 +52,7 @@ app.use('/api/v1/tables', tableRouter)
 app.use('/api/v1/comments', commentRouter)
 app.use('/api/v1/foodCategory', foodCategoryRouter)
 app.use('/api/v1/food', foodRouter)
+app.use('/api/v1/admin', adminRouter)
 
 // handle unhandled routes
 app.all('*', (req, res, next) => {
@@ -60,7 +62,7 @@ app.all('*', (req, res, next) => {
 app.use(errorMiddleware)
 
 app.listen(config.PORT, () => {
-    console.log(`SERVER: Server started on port ${config.PORT} in ${config.NODE_ENV} mode`)
+    console.log(`SERVER: Serverr started on port ${config.PORT} in ${config.NODE_ENV} mode`)
     console.log(`SWAGGER: http://localhost:${config.PORT}/swagger/docs/#/`)
 })
 

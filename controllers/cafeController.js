@@ -34,10 +34,10 @@ exports.createCafe = catchAsyncErrors(async (req, res, next) => {
     var cafe = await Cafe.findOne({ name: req.body.name })
     if (cafe) {
         return next(new ErrorHandler(`There is a cafe with the same name ${req.body.name}`, 404))
-    } else {
-        cafe = await Cafe.create(req.body);
-        await User.findByIdAndUpdate(req.user.id, { $set: { cafe: cafe.id } }, { new: true })
     }
+    cafe = await Cafe.create(req.body);
+    await User.findByIdAndUpdate(req.user.id, { $set: { cafe: cafe.id } }, { new: true })
+
     res.status(200).json({
         success: true,
         message: "Cafe created",
