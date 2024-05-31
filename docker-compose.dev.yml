@@ -16,7 +16,7 @@ services:
         MONGO_PASSWORD: ${MONGO_PASSWORD}
     image: alierensh3/hangcoffee-dev
     volumes:
-      - ./:/app:ro
+      - ./:/app
       - /app/node_modules
     env_file:
       - ./.env.development.local
