@@ -30,9 +30,9 @@ components:
         cafe_type:
           type: string
           example: Cafe
-        ratings:
-          type: integer
-          example: 4.4
+        address:
+          type: string
+          example: Türkali, Türkali Mahallesi Ihlamurdere Caddesi, Misirli Bahçe Sk. No:4/A, 34357 Beşiktaş/İstanbul
         about:
           type: string
           example: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
