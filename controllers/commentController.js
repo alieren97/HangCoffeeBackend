@@ -24,6 +24,10 @@ exports.createComment = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler('Cafe not found', 404))
     }
 
+    if (cafe.owner == req.user.id || cafe.employees.includes(req.user.id)) {
+        return next(new ErrorHandler('Cafe employee or employees can not make comment', 400))
+    }
+
     const { error } = createCommentBodyValidation(req.body)
     if (error)
         return next(new ErrorHandler(error.details[0].message), 400)
