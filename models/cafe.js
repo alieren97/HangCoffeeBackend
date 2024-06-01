@@ -101,6 +101,10 @@ const cafeSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'User',
         required: true
+    },
+    employees: {
+        type: [mongoose.Schema.ObjectId],
+        ref: 'Employee'
     }
 })
 

@@ -11,5 +11,6 @@ adminRouter.route('/users')
 
 adminRouter.route('/users/:userId')
     .get(isAuthenticatedUser, authorizeRoles("admin", "super admin"), adminController.getUser)
+    .delete(isAuthenticatedUser, authorizeRoles("admin", "super admin"), adminController.deleteUser)
 
 module.exports = adminRouter
