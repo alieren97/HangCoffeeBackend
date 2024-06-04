@@ -60,7 +60,37 @@ components:
           example: Admin User
         email:
           type: string
-          example:  admin1@gmail.com
+          example: admin1@gmail.com
+        role:
+          type: array
+          items:
+            type: string
+            example: user
+    FoodCard:
+      properties:
+        _id:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        name:
+          type: string
+          example: Tokenflex
+        image:
+          type: string
+          example: https://biyudum.com/images/slider/s178mxor2t.jpg
+    Employee:
+      properties:
+        _id:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        workingType:
+          type: string
+          example: barista
+        cafe:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        user:
+          type: object
+          $ref: "#/components/schemas/User"
     Comment:
       properties:
         _id:
@@ -381,7 +411,7 @@ paths:
                             example: testuser1@gmail.com
                           role:
                             type: array
-                            items: 
+                            items:
                               type: string
                               default: user
         "401":
@@ -527,6 +557,439 @@ paths:
                   message:
                     type: string
                     example: "User not found"
+    delete:
+      tags: [Admin]
+      summary: Delete user with spesific id
+      description: Delete user with spesific id
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: The id of user
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: User deleted successfully
+        "404":
+          description: User not found error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User not found"
+  /admin/foodCards:
+    get:
+      tags: [Admin]
+      summary: Get Food Cards
+      description: Get Food Cards
+      responses:
+        "200":
+          description: It will return food cards list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: null
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/FoodCard"
+    post:
+      tags: [Admin]
+      summary: Create new Food Card
+      description: Create new Food Card
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - image
+              properties:
+                name:
+                  type: string
+                  default: Sodexo
+                image:
+                  type: string
+                  default: https://biyudum.com/images/slider/s178mxor2t.jpg
+              example:
+                name: Sodexo
+                image: https://biyudum.com/images/slider/s178mxor2t.jpg
+      responses:
+        "201":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Food Card created succesfully
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/FoodCard"
+  /admin/foodCards/{foodCardId}:
+    delete:
+      tags: [Admin]
+      summary: Delete specific foodCard
+      description: Delete specific foodCard
+      parameters:
+        - in: path
+          name: foodCardId
+          schema:
+            type: string
+          required: true
+          description: The id of food card
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Food card deleted successfully
+  /admin/onlineOrders:
+    get:
+      tags: [Admin]
+      summary: Get Online Order Firms
+      description: Get Online Order Firms
+      responses:
+        "200":
+          description: It will return online order firms list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: null
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/FoodCard"
+    post:
+      tags: [Admin]
+      summary: Create new Online Order Firm
+      description: Create new Online Order Firm
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - image
+              properties:
+                name:
+                  type: string
+                  default: Getir
+                image:
+                  type: string
+                  default: https://biyudum.com/images/slider/s178mxor2t.jpg
+              example:
+                name: Getir
+                image: https://biyudum.com/images/slider/s178mxor2t.jpg
+      responses:
+        "201":
+          description: It will return online order firms list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Successfully created
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/FoodCard"
+  /admin/onlineOrders/{onlineOrderId}:
+    delete:
+      tags: [Admin]
+      summary: Delete specific online order firm
+      description: Delete specific online order firm
+      parameters:
+        - in: path
+          name: onlineOrderId
+          schema:
+            type: string
+          required: true
+          description: The id of online order firm
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Online order firm deleted successfully
+
+  /employer/cafe/{cafeId}/employee/{userId}:
+    post:
+      tags: [Employer]
+      summary: Add Specific user to cafe as Employee
+      description: Add Specific user to cafe as Employee
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: The id of user
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: BEmployee 5  added as employee to your cafe as barista
+    put:
+      tags: [Employer]
+      summary: Edit Specific user to cafe as Employee
+      description: Edit Specific user to cafe as Employee
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: The id of user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - workingType
+              properties:
+                workingType:
+                  type: string
+                  default: cook
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: BEmployee 5  added as employee to your cafe as barista
+        "404":
+          description: User not found error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User not found"
+    delete:
+      tags: [Employer]
+      summary: Dlete Specific user to cafe as Employee
+      description: Dlete Specific user to cafe as Employee
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: The id of user
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: BEmployee 5  deleted as employee from your cafe
+        "404":
+          description: User not found error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User not found"
+  /employer/cafe/{cafeId}/employees:
+    get:
+      tags: [Employer]
+      summary: Get Employees for the Cafe
+      description: Get Employees for the Cafe
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  lentg:
+                    type: integer
+                    example: 4
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Employee"
+  /employer/cafe/{cafeId}:
+    put:
+      tags: [Employer]
+      summary: Update a specific cafe With Cafe Id
+      description: Update a specific cafe With Cafe Id
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - workingType
+              properties:
+                food_card:
+                  type: array
+                  items:
+                    type: string
+                    default: Sodexo
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: cafe succesfully updated
+        "404":
+          description: It will return error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: cafe did not found
   /cafes:
     get:
       tags: [Cafe]

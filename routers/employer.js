@@ -11,5 +11,11 @@ employeerRouter.route('/cafe/:cafeId/employee/:userId')
 employeerRouter.route('/cafe/:cafeId/employees')
     .get(isAuthenticatedUser, checkOwner, employerController.getEmployees)
 
+employeerRouter.route('/cafe/:cafeId')
+    .put(isAuthenticatedUser, checkOwner, employerController.updateCafe)
+
+employeerRouter.route('/foodCards')
+    .get(isAuthenticatedUser, checkOwner, employerController.getFoodCards)
+
 
 module.exports = employeerRouter

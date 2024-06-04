@@ -5,7 +5,7 @@ const ErrorHandler = require('../utils/errorHandler')
 const { createCafeBodyValidation, updateCafeBodyValidation } = require('../utils/validationSchema')
 
 exports.getAllCafes = catchAsyncErrors(async (req, res, next) => {
-    const cafes = await Cafe.find();
+    const cafes = await Cafe.find().populate('food_card');
     res.status(200).json({
         success: true,
         length: cafes.length,
@@ -14,7 +14,7 @@ exports.getAllCafes = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getCafe = catchAsyncErrors(async (req, res, next) => {
-    const cafe = await Cafe.findById(req.params.cafeId)
+    const cafe = await Cafe.findById(req.params.cafeId).populate('food_card')
     if (!cafe) {
         return next(new ErrorHandler('Cafe not found', 404))
     } else {
