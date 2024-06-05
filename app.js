@@ -32,7 +32,7 @@ app.use(limiter);
 app.use(cors());
 app.use(morgan('tiny'));
 app.disable('x-powered-by'); // less hackers know about our stack
-app.use('/swagger/docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
+app.use('/api/v1/swagger/docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
 
 
 const authRouter = require('./routers/auth.js')
