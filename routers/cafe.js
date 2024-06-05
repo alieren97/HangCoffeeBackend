@@ -5,10 +5,10 @@ const { isAuthenticatedUser, authorizeRoles, checkOwner } = require('../middlewa
 
 cafeRouter.route('/')
     .get(cafeController.getAllCafes)
-    .post(isAuthenticatedUser, authorizeRoles('employeer', 'admin'), cafeController.createCafe)
+    .post(isAuthenticatedUser, authorizeRoles('employer', 'admin'), cafeController.createCafe)
 cafeRouter.route('/:cafeId')
     .get(cafeController.getCafe)
-    .put(isAuthenticatedUser, checkOwner, authorizeRoles('employeer', 'admin'), cafeController.updateCafe)
-    .delete(isAuthenticatedUser, checkOwner, authorizeRoles('employeer', 'admin'), cafeController.deleteCafe)
+    .put(isAuthenticatedUser, checkOwner, authorizeRoles('employer', 'admin'), cafeController.updateCafe)
+    .delete(isAuthenticatedUser, checkOwner, authorizeRoles('employer', 'admin'), cafeController.deleteCafe)
 
 module.exports = cafeRouter;

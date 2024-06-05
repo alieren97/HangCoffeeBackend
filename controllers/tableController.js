@@ -5,15 +5,14 @@ const ErrorHandler = require('../utils/errorHandler')
 const { createTableBodyValidation, updateTableBodyValidation } = require('../utils/validationSchema')
 
 exports.addTable = catchAsyncErrors(async (req, res, next) => {
-    req.body.cafe = req.params.cafeId
-    const table = await Table.findOne({ tableName: req.body.tableName, cafe: req.params.cafeId })
+    const table = await Table.findOne({ tableName: req.body.tableName, cafe: req.user.cafe })
     if (table) {
         return next(new ErrorHandler('Table name already exist', 404))
     }
     const { error } = createTableBodyValidation(req.body)
     if (error)
         return next(new ErrorHandler(error.details[0].message), 401)
-    await Table.create(req.body)
+    await Table.create({ tableName: req.body.tableName, cafe: req.user.cafe, quota: req.body.quota, tableInfo: req.body.tableInfo })
     res.status(200).json({
         success: true,
         message: "Table created",

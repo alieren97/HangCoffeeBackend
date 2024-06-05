@@ -66,20 +66,9 @@ const cafeSchema = new mongoose.Schema({
         enum: {
             values: [
                 "Sodexo",
-                "Edenred",
                 "Tokenflex",
                 "Multinet",
-                "Hiçbiri"
-            ]
-        }
-    },
-    credit_card: {
-        type: [String],
-        required: [true, "Please enter food card you are aggree with"],
-        enum: {
-            values: [
-                "Mastercard",
-                "Visa"
+                "Edenred"
             ]
         }
     },
@@ -104,7 +93,7 @@ const cafeSchema = new mongoose.Schema({
     },
     employees: {
         type: [mongoose.Schema.ObjectId],
-        ref: 'User'
+        ref: 'Employee'
     }
 })
 

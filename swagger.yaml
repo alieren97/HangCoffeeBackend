@@ -60,7 +60,26 @@ components:
           example: Admin User
         email:
           type: string
-          example:  admin1@gmail.com
+          example: admin1@gmail.com
+        role:
+          type: array
+          items:
+            type: string
+            example: user
+    Employee:
+      properties:
+        _id:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        workingType:
+          type: string
+          example: barista
+        cafe:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        user:
+          type: object
+          $ref: "#/components/schemas/User"
     Comment:
       properties:
         _id:
@@ -381,7 +400,7 @@ paths:
                             example: testuser1@gmail.com
                           role:
                             type: array
-                            items: 
+                            items:
                               type: string
                               default: user
         "401":
@@ -527,6 +546,258 @@ paths:
                   message:
                     type: string
                     example: "User not found"
+    delete:
+      tags: [Admin]
+      summary: Delete user with spesific id
+      description: Delete user with spesific id
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: The id of user
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: User deleted successfully
+        "404":
+          description: User not found error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User not found"
+  /employer/employee/{userId}:
+    post:
+      tags: [Employer]
+      summary: Add Specific user to cafe as Employee
+      description: Add Specific user to cafe as Employee
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: The id of user
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: BEmployee 5  added as employee to your cafe as barista
+    put:
+      tags: [Employer]
+      summary: Edit Specific user to cafe as Employee
+      description: Edit Specific user to cafe as Employee
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: The id of user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - workingType
+              properties:
+                workingType:
+                  type: string
+                  default: cook
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: BEmployee 5  added as employee to your cafe as barista
+        "404":
+          description: User not found error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User not found"
+    delete:
+      tags: [Employer]
+      summary: Dlete Specific user to cafe as Employee
+      description: Dlete Specific user to cafe as Employee
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: The id of user
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: BEmployee 5  deleted as employee from your cafe
+        "404":
+          description: User not found error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User not found"
+  /employer/employees:
+    get:
+      tags: [Employer]
+      summary: Get Employees for the Cafe
+      description: Get Employees for the Cafe
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  lentg:
+                    type: integer
+                    example: 4
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Employee"
+  /employer/updateCafe:
+    put:
+      tags: [Employer]
+      summary: Update a specific cafe With Cafe Id
+      description: Update a specific cafe With Cafe Id
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - workingType
+              properties:
+                food_card:
+                  type: array
+                  items:
+                    type: string
+                    default: Sodexo
+      responses:
+        "200":
+          description: It will return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: cafe succesfully updated
+        "404":
+          description: It will return error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: cafe did not found
   /cafes:
     get:
       tags: [Cafe]
@@ -743,48 +1014,12 @@ paths:
                   message:
                     type: string
                     example: "Cafe is deleted"
-  /tables/{cafeId}:
-    get:
-      tags: [Table]
-      description: >
-        Hang Coffee Get Tables for specific Cafe
-      parameters:
-        - in: path
-          name: cafeId
-          schema:
-            type: string
-          required: true
-          description: The id of cafe
-      responses:
-        "200":
-          description: It will return cafe list
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  length:
-                    type: integer
-                    example: 4
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      $ref: "#/components/schemas/Table"
+  /tables/addTable:
     post:
       tags: [Table]
       description: >
-        Hang Coffee Create Table for a specific Cafe
-      parameters:
-        - in: path
-          name: cafeId
-          schema:
-            type: string
-          required: true
-          description: The id of cafe
+        Only Employer can Create Table for a specific Cafe
+      summary:  Only Employer can Create Table for a specific Cafe
       requestBody:
         content:
           application/json:
@@ -822,12 +1057,11 @@ paths:
                   data:
                     type: object
                     $ref: "#/components/schemas/Table"
-  /tables/{cafeId}/{tableId}:
+  /tables/cafe/{cafeId}:
     get:
       tags: [Table]
       description: >
-        Hang Coffee Get A Specific Table
-      summary: Hang Coffee Get A Specific Table
+        Hang Coffee Get Tables for specific Cafe
       parameters:
         - in: path
           name: cafeId
@@ -835,6 +1069,32 @@ paths:
             type: string
           required: true
           description: The id of cafe
+      responses:
+        "200":
+          description: It will return cafe list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 4
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Table"
+  /tables/{tableId}:
+    get:
+      tags: [Table]
+      description: >
+        Hang Coffee Get A Specific Table
+      summary: Hang Coffee Get A Specific Table
+      parameters:
         - in: path
           name: tableId
           schema:
@@ -862,12 +1122,6 @@ paths:
       summary: Hang Coffee Delete A Specific Table
       parameters:
         - in: path
-          name: cafeId
-          schema:
-            type: string
-          required: true
-          description: The id of cafe
-        - in: path
           name: tableId
           schema:
             type: string
@@ -893,12 +1147,6 @@ paths:
         Hang Coffee Update A Specific Table
       summary: Hang Coffee Update A Specific Table
       parameters:
-        - in: path
-          name: cafeId
-          schema:
-            type: string
-          required: true
-          description: The id of cafe
         - in: path
           name: tableId
           schema:
@@ -942,8 +1190,7 @@ paths:
                   message:
                     type: string
                     example: Table updated succesfully
-
-  /comments/{cafeId}:
+  /comments/cafe/{cafeId}:
     get:
       tags: [Comment]
       description: >
@@ -1041,48 +1288,12 @@ paths:
                   message:
                     type: string
                     example: Comment is deleted
-  /foodCategory/{cafeId}:
-    get:
-      tags: [Food Category]
-      description: >
-        Hang Coffee Get Food Categories By Cafe
-      parameters:
-        - in: path
-          name: cafeId
-          schema:
-            type: string
-          required: true
-          description: The id of cafe
-      responses:
-        "200":
-          description: It will return cafe list
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  length:
-                    type: integer
-                    example: 4
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      $ref: "#/components/schemas/FoodCategory"
+  /foodCategory/addCategory:
     post:
       tags: [Food Category]
       description: >
-        Hang Coffee Create a  Food Category By Cafe
-      parameters:
-        - in: path
-          name: cafeId
-          schema:
-            type: string
-          required: true
-          description: The id of cafe
+        Only Employer can Create a  Food Category By Cafe
+      summary: Only Employer can Create a  Food Category By Cafe
       requestBody:
         content:
           application/json:
@@ -1114,11 +1325,12 @@ paths:
                   data:
                     type: object
                     $ref: "#/components/schemas/FoodCategory"
-  /foodCategory/{cafeId}/{categoryId}:
+  /foodCategory/cafe/{cafeId}:
     get:
       tags: [Food Category]
       description: >
-        Hang Coffee Get Food Category By Cafe Id and Category Id
+        Get Food Categories By Cafe
+      summary: Get Food Categories By Cafe
       parameters:
         - in: path
           name: cafeId
@@ -1126,6 +1338,32 @@ paths:
             type: string
           required: true
           description: The id of cafe
+      responses:
+        "200":
+          description: It will return cafe list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 4
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/FoodCategory"
+  /foodCategory/{categoryId}:
+    get:
+      tags: [Food Category]
+      description: >
+        Get Food Category By Cafe Id and Category Id
+      summary: Get Food Category By Cafe Id and Category Id
+      parameters:
         - in: path
           name: categoryId
           schema:
@@ -1152,14 +1390,9 @@ paths:
     put:
       tags: [Food Category]
       description: >
-        Hang Coffee Update a Food Category By CafeId and CategoryId
+        Update a Food Category By CafeId and CategoryId
+      summary: Update a Food Category By CafeId and CategoryId
       parameters:
-        - in: path
-          name: cafeId
-          schema:
-            type: string
-          required: true
-          description: The id of cafe
         - in: path
           name: categoryId
           schema:
@@ -1200,14 +1433,9 @@ paths:
     delete:
       tags: [Food Category]
       description: >
-        Hang Coffee Delete a Food Category By Cafe Id and Category Id
+        Delete a Food Category By Cafe Id and Category Id
+      summary: Delete a Food Category By Cafe Id and Category Id
       parameters:
-        - in: path
-          name: cafeId
-          schema:
-            type: string
-          required: true
-          description: The id of cafe
         - in: path
           name: categoryId
           schema:
@@ -1229,7 +1457,8 @@ paths:
     get:
       tags: [Food]
       description: >
-        Hang Coffee Get Food By FoodId
+        Get Food By FoodId
+      summary: Get Food By FoodId
       parameters:
         - in: path
           name: foodId
@@ -1258,7 +1487,8 @@ paths:
     put:
       tags: [Food]
       description: >
-        Hang Coffee Update a Food By Food Id
+        Update a Food By Food Id
+      summary: Update a Food By Food Id
       parameters:
         - in: path
           name: foodId
@@ -1305,7 +1535,8 @@ paths:
     delete:
       tags: [Food]
       description: >
-        Hang Coffee Delete a Food By Food Id
+        Delete a Food By Food Id
+      summary: Delete a Food By Food Id
       parameters:
         - in: path
           name: foodId
@@ -1328,24 +1559,12 @@ paths:
                   message:
                     type: string
                     example: food delete succesfully
-  /food/{cafeId}/foodCategory/{categoryId}:
+  /food/addFood:
     post:
       tags: [Food]
       description: >
-        Hang Coffee Create a Food By Cafe Id and Category Id
-      parameters:
-        - in: path
-          name: cafeId
-          schema:
-            type: string
-          required: true
-          description: The id of cafe
-        - in: path
-          name: categoryId
-          schema:
-            type: string
-          required: true
-          description: The id of food
+        Only Employer can Create a Food By Cafe Id and Category Id
+      summary:  Only Employer can Create a Food By Cafe Id and Category Id
       requestBody:
         content:
           application/json:
@@ -1381,11 +1600,12 @@ paths:
                   message:
                     type: string
                     example: food created succesfully
-  /food/{cafeId}:
+  /food/cafe/{cafeId}:
     get:
       tags: [Food]
       description: >
-        Hang Coffee Get All Foods By Cafe
+        Get All Foods By Cafe
+      summary: Get All Foods By Cafe
       parameters:
         - in: path
           name: cafeId
@@ -1393,6 +1613,38 @@ paths:
             type: string
           required: true
           description: The id of cafe
+      responses:
+        "200":
+          description: It will return foods
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 4
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Food"
+  /food/category/{categoryId}:
+    get:
+      tags: [Food]
+      description: >
+        Get All Foods By Category Id
+      summary: Get All Foods By Category Id
+      parameters:
+        - in: path
+          name: categoryId
+          schema:
+            type: string
+          required: true
+          description: The id of food category
       responses:
         "200":
           description: It will return foods

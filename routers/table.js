@@ -4,11 +4,13 @@ const tableRouter = express.Router();
 const tableController = require('../controllers/tableController')
 const { isAuthenticatedUser, checkOwner } = require('../middlewares/auth')
 
-tableRouter.route('/:cafeId')
+tableRouter.route('/cafe/:cafeId')
     .get(isAuthenticatedUser, tableController.getTables)
+
+tableRouter.route('/addTable')
     .post(isAuthenticatedUser, checkOwner, tableController.addTable)
 
-tableRouter.route('/:cafeId/:tableId')
+tableRouter.route('/:tableId')
     .get(isAuthenticatedUser, tableController.getTable)
     .put(isAuthenticatedUser, checkOwner, tableController.updateTable)
     .delete(isAuthenticatedUser, checkOwner, tableController.deleteTable)

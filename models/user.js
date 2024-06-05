@@ -50,22 +50,50 @@ const userSchema = new mongoose.Schema({
     image: {
         type: String,
     },
+    employee: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Employee'
+    },
     createdAt: {
         type: Date,
         default: Date.now
     },
+
     resetPasswordToken: String,
     resetPasswordExpired: Date,
 })
 
 userSchema.pre('save', async function (next) {
-    this.password = await bcrypt.hash(this.password, 10)
+    if (this.isModified('password') || this.isNew) {
+        this.password = await bcrypt.hash(this.password, 10)
+    }
 })
+
+// userSchema.pre('remove', async function (next) {
+//     await Cafe.findByIdAndUpdate(
+//         this.cafe,
+//         { $pull: { employees: this.employee } },
+//         { new: true }
+//     );
+//     await Employee.findByIdAndDelete(this.employee)
+// })
 
 userSchema.methods.getJwtToken = function () {
     return jwt.sign({ id: this._id, }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_TIME
     })
+}
+
+// deletes the items that we do not wanna show
+userSchema.methods.toJSON = function () {
+    const user = this;
+    const userObject = user.toObject();
+
+    delete userObject.password;
+    delete userObject.__v;
+    delete userObject.createdAt;
+
+    return userObject;
 }
 
 //Compare user password in database password

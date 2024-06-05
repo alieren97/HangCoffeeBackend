@@ -1,13 +1,13 @@
 const express = require('express')
 const commentRouter = express.Router();
 const commentController = require('../controllers/commentController')
-const { isAuthenticatedUser, authorizeRoles, checkOwnerForComment } = require('../middlewares/auth')
+const { isAuthenticatedUser, checkOwner } = require('../middlewares/auth')
 
-commentRouter.route('/:cafeId')
+commentRouter.route('/cafe/:cafeId')
     .get(commentController.getCommentsByCafeId)
     .post(isAuthenticatedUser, commentController.createComment);
 
 commentRouter.route('/:commentId')
-    .delete(isAuthenticatedUser, checkOwnerForComment, authorizeRoles('employeer', 'admin'), commentController.deleteComment)
+    .delete(isAuthenticatedUser, checkOwner, commentController.deleteComment)
 
 module.exports = commentRouter;
