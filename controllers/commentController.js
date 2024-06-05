@@ -52,8 +52,6 @@ exports.createComment = catchAsyncErrors(async (req, res, next) => {
 exports.deleteComment = catchAsyncErrors(async (req, res, next) => {
     const comment = await Comment.findById(req.params.commentId)
     const userCafeId = req.user.cafe
-    console.log(comment)
-    console.log(userCafeId)
     if (!comment) {
         return next(new ErrorHandler('Comment not found', 404))
     }

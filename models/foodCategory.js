@@ -19,18 +19,4 @@ const foodCategoryScheme = new mongoose.Schema({
     }]
 })
 
-// foodCategoryScheme.pre('save', async function () {
-//     try {
-//         // Find the user document and update its posts array with the new post
-//         await Cafe.findByIdAndUpdate(
-//           this.cafe,
-//           { $push: { menu: this._id } },
-//           { new: true }
-//         );
-       
-//       } catch (err) {
-//         console.error(err);
-//       }
-// })
-
 module.exports = mongoose.model('FoodCategory', foodCategoryScheme, 'foodCategory')
