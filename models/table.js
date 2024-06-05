@@ -20,7 +20,8 @@ const tableSchema = new mongoose.Schema({
     required: true
   },
   tableInfo: {
-    type: String
+    type: String,
+    required: true
   },
   check: {
     type: mongoose.Schema.ObjectId,

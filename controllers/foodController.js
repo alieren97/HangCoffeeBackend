@@ -6,22 +6,21 @@ const ErrorHandler = require('../utils/errorHandler')
 const { createFoodBodyValidation } = require('../utils/validationSchema.js')
 
 exports.addFood = catchAsyncErrors(async (req, res, next) => {
-    const cafe = await Cafe.findById(req.params.cafeId)
+    const cafe = await Cafe.findById(req.user.cafe)
     if (!cafe) {
         return next(new ErrorHandler('Cafe not found', 404))
     }
-    const foodCategory = await FoodCategory.findById(req.params.categoryId)
-    if (!foodCategory) {
-        return next(new ErrorHandler('Food Category not found', 404))
-    }
-    req.body.foodCategory = req.params.categoryId
-    req.body.cafe = req.params.cafeId
 
     const { error } = createFoodBodyValidation(req.body)
     if (error)
         return next(new ErrorHandler(error.details[0].message), 400)
-    
-    await Food.create(req.body)
+
+    const foodCategory = await FoodCategory.findById(req.body.foodCategory)
+    if (!foodCategory) {
+        return next(new ErrorHandler('Food Category not found', 404))
+    }
+
+    await Food.create({ foodImage: req.body.foodImage, cafe: cafe._id, foodName: req.body.foodName, price: req.body.price, foodCategory: req.body.foodCategory })
     res.status(200).json({
         success: true,
         message: "Food Added Successfully",
@@ -29,8 +28,7 @@ exports.addFood = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.getFoodById = catchAsyncErrors(async (req, res, next) => {
-    const foodId = req.params.foodId
-    const food = await Food.findById(foodId)
+    const food = await Food.findById(req.params.foodId)
     if (!food) {
         return next(new ErrorHandler('Food not found', 404))
     }
@@ -83,3 +81,18 @@ exports.updateFood = catchAsyncErrors(async (req, res, next) => {
         data: updatedFood
     })
 })
+
+exports.getFoodsByCategoryId = catchAsyncErrors(async (req, res, next) => {
+    const foodCategory = await FoodCategory.findById(req.params.categoryId)
+    if (!foodCategory) {
+        return next(new ErrorHandler('Food Category not found', 404))
+    }
+    const foods = await Food.find({ foodCategory: foodCategory._id })
+    res.status(200).json({
+        success: true,
+        message: null,
+        length: foods.length,
+        data: foods
+    })
+})
+

@@ -54,8 +54,7 @@ exports.createTableBodyValidation = (body) => {
     const schema = Joi.object({
         tableName: Joi.string().min(3).max(30).required(),
         quota: Joi.number().required(),
-        tableInfo: Joi.string().min(5).max(50).required(),
-        cafe: Joi.string().min(5).max(50).required()
+        tableInfo: Joi.string().min(5).max(50).required()
     })
 
     return schema.validate(body)
@@ -83,8 +82,7 @@ exports.createFoodBodyValidation = (body) => {
         foodImage: Joi.string().min(3).max(200).required(),
         foodName: Joi.string().min(3).max(50).required(),
         price: Joi.number().required(),
-        cafe: Joi.string().min(3).max(50).required(),
-        foodCategory: Joi.string().min(3).max(50).required(),
+        foodCategory: Joi.string().required()
     })
 
     return schema.validate(body)

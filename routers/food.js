@@ -3,10 +3,13 @@ const foodRouter = express.Router();
 const foodController = require('../controllers/foodController')
 const { isAuthenticatedUser, checkOwner } = require('../middlewares/auth')
 
-foodRouter.route('/:cafeId/foodCategory/:categoryId')
+foodRouter.route('/category/:categoryId')
+    .get(isAuthenticatedUser, checkOwner, foodController.getFoodsByCategoryId)
+
+foodRouter.route('/addFood')
     .post(isAuthenticatedUser, checkOwner, foodController.addFood)
 
-foodRouter.route('/:cafeId')
+foodRouter.route('/cafe/:cafeId')
     .get(foodController.getFoodsByCafe)
 
 foodRouter.route('/:foodId')

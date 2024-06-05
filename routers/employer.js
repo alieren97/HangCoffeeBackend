@@ -3,19 +3,15 @@ const employeerRouter = express.Router()
 const employerController = require('../controllers/employerController')
 const { isAuthenticatedUser, authorizeRoles, checkOwner } = require('../middlewares/auth')
 
-employeerRouter.route('/cafe/:cafeId/employee/:userId')
+employeerRouter.route('/employee/:userId')
     .post(isAuthenticatedUser, checkOwner, employerController.addEmployee)
     .put(isAuthenticatedUser, checkOwner, employerController.updateEmployee)
     .delete(isAuthenticatedUser, checkOwner, employerController.deleteEmployee)
 
-employeerRouter.route('/cafe/:cafeId/employees')
+employeerRouter.route('/employees')
     .get(isAuthenticatedUser, checkOwner, employerController.getEmployees)
 
-employeerRouter.route('/cafe/:cafeId')
+employeerRouter.route('/updateCafe')
     .put(isAuthenticatedUser, checkOwner, employerController.updateCafe)
-
-employeerRouter.route('/foodCards')
-    .get(isAuthenticatedUser, checkOwner, employerController.getFoodCards)
-
 
 module.exports = employeerRouter

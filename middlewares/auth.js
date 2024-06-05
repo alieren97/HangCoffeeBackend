@@ -35,8 +35,8 @@ exports.authorizeRoles = (...roles) => {
 
 // Check owner of that cafe so it can be updated or deleted.
 exports.checkOwner = catchAsyncErrors(async (req, res, next) => {
-    const cafe = await Cafe.findById(req.params.cafeId)
-    if (cafe.owner != req.user.id) {
+    const cafe = await Cafe.findById(req.user.cafe)
+    if (req.user.cafe == null || cafe.owner != req.user.id) {
         return next(new ErrorHandler('You have to be the owner of this cafe', 403))
     }
     next()

@@ -9,7 +9,7 @@ exports.getCommentsByCafeId = catchAsyncErrors(async (req, res, next) => {
     if (!cafe) {
         return next(new ErrorHandler('Cafe not found', 404))
     }
-    const comments = await Comment.find({ cafe: cafe })
+    const comments = await Comment.find({ cafe: cafe }).populate('user')
     res.status(200).json({
         success: true,
         message: null,
@@ -28,7 +28,7 @@ exports.createComment = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler('Cafe employer can not make comment', 400))
     }
 
-    if (!cafe.employees.some(employee => employee.user == req.user.id)) {
+    if (cafe.employees.some(employee => employee.user == req.user.id)) {
         return next(new ErrorHandler('Cafe employee can not make comment', 400))
     }
 
@@ -51,8 +51,15 @@ exports.createComment = catchAsyncErrors(async (req, res, next) => {
 
 exports.deleteComment = catchAsyncErrors(async (req, res, next) => {
     const comment = await Comment.findById(req.params.commentId)
+    const userCafeId = req.user.cafe
+    console.log(comment)
+    console.log(userCafeId)
     if (!comment) {
         return next(new ErrorHandler('Comment not found', 404))
+    }
+
+    if (!comment.cafe.equals(userCafeId)) {
+        return next(new ErrorHandler('You have to owner of this cafe to delete this comment', 404))
     }
     await Comment.findByIdAndDelete(req.params.commentId)
     res.status(200).json({

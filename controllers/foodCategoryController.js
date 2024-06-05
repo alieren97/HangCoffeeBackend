@@ -6,7 +6,7 @@ const ErrorHandler = require('../utils/errorHandler')
 const { createFoodCategoryBodyValidation } = require('../utils/validationSchema.js')
 
 exports.addCategory = catchAsyncErrors(async (req, res, next) => {
-    const cafe = await Cafe.findById(req.params.cafeId)
+    const cafe = await Cafe.findById(req.user.cafe)
 
     if (!cafe) {
         return next(new ErrorHandler('Cafe not found', 404))
@@ -24,12 +24,7 @@ exports.addCategory = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.getCategoryByCafe = catchAsyncErrors(async (req, res, next) => {
-    const cafe = await Cafe.findById(req.params.cafeId)
-    if (!cafe) {
-        return next(new ErrorHandler('Cafe not found', 404))
-    }
-
-    const category = await FoodCategory.findById(req.params.categoryId).populate('foods')
+    const category = await FoodCategory.findById(req.params.categoryId)
     if (!category) {
         return next(new ErrorHandler('Category not found', 404))
     }
@@ -45,16 +40,17 @@ exports.getCategoriesByCafe = catchAsyncErrors(async (req, res, next) => {
     if (!cafe) {
         return next(new ErrorHandler('Cafe not found', 404))
     }
-    const categories = await FoodCategory.find({ cafe: cafe }).populate('foods')
+    const categories = await FoodCategory.find({ cafe: cafe._id }).populate('foods')
     res.status(200).json({
         success: true,
+        message: null,
         length: categories.length,
         data: categories
     })
 })
 
 exports.updateCategoryByCafe = catchAsyncErrors(async (req, res, next) => {
-    const cafe = await Cafe.findById(req.params.cafeId)
+    const cafe = await Cafe.findById(req.user.cafe)
     if (!cafe) {
         return next(new ErrorHandler('Cafe not found', 404))
     }
@@ -72,7 +68,7 @@ exports.updateCategoryByCafe = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.deleteCategoryByCafe = catchAsyncErrors(async (req, res, next) => {
-    const cafe = await Cafe.findById(req.params.cafeId)
+    const cafe = await Cafe.findById(req.user.cafe)
     if (!cafe) {
         return next(new ErrorHandler('Cafe not found', 404))
     }
