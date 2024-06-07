@@ -18,10 +18,26 @@
 		"admin_update_role_user_updated_successfully": "{{email}} email adresine sahip olan kullanıcı {{role}} olarak atandı.",
 		"admin_user_deleted_successfully": "{{name}} başarılı bir şekilde silindi."
 	},
-	"welcome": "Hang Coffee uygulamasina hoşgeldin",
-	"create": "",
-	"read": "Read User",
-	"update": "Update User",
-	"delete": "Delete User",
-	"register_success": "register_success"
+	"cafe": {
+		"cafe_not_found_error": "Cafe bulunamadı",
+		"cafe_already_has_the_same_name_error": "Bu {{cafeName}} isime sahip bir cafe bulunmaktadır.",
+		"cafe_created_successfully": "Cafe başarılı bir şekilde oluşturuldu.",
+		"cafe_updated_successfully": "Cafe başarılı bir şekilde güncellendi.",
+		"cafe_deleted_successfully": "{{cafeName}} başarılı bir şekilde silindi."
+	},
+	"comment": {
+		"comment_employee_cant_make_comment_to_working_cafe": "Cafede çalışan çalışanlar yorum yapamaz!.",
+		"comment_employer_cant_make_comment_to_working_cafe": "Kafe sahibi kendi kafesine yorum yapamaz!.",
+		"comment_added_successfully": "Yorum başarılı bir şekilde gönderildi.",
+		"comment_not_found": "Yorum bulunamadı",
+		"comment_delete_have_to_be_owner_this_cafe": "Bu yorumu silebilmek için kafenin sahibi olmanız gerekiyor.",
+		"comment_deleted_successfully": "{{comment}} başarılı bir şekilde silindi."
+	},
+	"employer": {
+		"employer_add_employee_user_already_working": "Kullanıcı zaten bir kafede çalışıyor",
+		"employer_add_employee_user_added": "{{userName}} adlı kullanıcı başarılı bir şekilde kafenizde {{role}} olarak çalışmaya başladı.",
+		"employer_there_is_no_employee": "Bu bilgiye sahip bir çalışan bilgisi bulunmamaktadır",
+		"employer_updated_the_current_employee_working_type": "{{userName}}, rolü {{role}} olarak güncellendi.",
+		"employer_deleted_the_employee_successfully": "{{userName}}, successfully deleted from your cafe as employee"
+	}
 }

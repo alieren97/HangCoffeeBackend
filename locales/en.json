@@ -16,16 +16,28 @@
 	"admin": {
 		"admin_update_role_user_already_has_the_role": "User already has the {{role}}",
 		"admin_update_role_user_updated_successfully": "{{email}} role added into roles as {{role}}",
-        "admin_user_deleted_successfully": "{{name}} deleted successfully"
+		"admin_user_deleted_successfully": "{{name}} deleted successfully"
 	},
-	"welcome": "Welcome to the User CRUD App!",
-	"create": "Create User",
-	"read": "Read User",
-	"update": "Update User",
-	"delete": "Delete User",
-	"invalid signature": "invalid signature",
-	"i18n is not defined": "i18n is not defined",
-	"i18n is not a function": "i18n is not a function",
-	"User already has the employee": "User already has the employee",
-	"admin_update_role_user_updated_successfully": "admin_update_role_user_updated_successfully"
+	"cafe": {
+		"cafe_not_found_error": "Cafe not found",
+		"cafe_already_has_the_same_name_error": "There is a cafe with the same name with {{{{cafeName}}}}",
+		"cafe_created_successfully": "Cafe created successfully.",
+		"cafe_updated_successfully": "Cafe updated successfully.",
+		"cafe_deleted_successfully": "Cafe with the name {{cafeName}} deleted successfully."
+	},
+	"comment": {
+		"comment_employee_cant_make_comment_to_working_cafe": "Cafe employee can not make comment",
+		"comment_employer_cant_make_comment_to_working_cafe": "Cafe owner can not make comment to his/her own cafe.",
+		"comment_added_successfully": "Comment added successfully",
+		"comment_not_found": "Comment not found",
+		"comment_delete_have_to_be_owner_this_cafe": "You have to owner of this cafe to delete this comment",
+		"comment_deleted_successfully": "{{comment}} deleted successfully"
+	},
+	"employer": {
+		"employer_add_employee_user_already_working": "User already working in a cafe",
+		"employer_add_employee_user_added": "{{userName}} added as employee to your cafe as {{role}}",
+		"employer_there_is_no_employee": "There is no Employee with that user information",
+		"employer_updated_the_current_employee_working_type": "{{userName}}, working type updated to {{role}}",
+		"employer_deleted_the_employee_successfully": "{{userName}}, kafenizden başarılı bir şekilde kovuldu :D"
+	}
 }
