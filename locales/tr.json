@@ -1,0 +1,27 @@
+{
+	"login": {
+		"login_invalid_email_or_password": "Geçersiz email veya şifre",
+		"login_success": "Giriş başarılı."
+	},
+	"register": {
+		"register_email_already_exist": "Bu email adresi kullanilmaktadir.",
+		"register_success": "Hesabınız başarıyla oluşturuldu"
+	},
+	"me": {
+		"me_login_first_error": "Kaynağa ulaşmak için önce giriş yapmalısın."
+	},
+	"user": {
+		"user_not_found_error": "Kullanıcı bulunamadı."
+	},
+	"admin": {
+		"admin_update_role_user_already_has_the_role": "Kullanıcı zaten {{role}} olarak kayıtlı.",
+		"admin_update_role_user_updated_successfully": "{{email}} email adresine sahip olan kullanıcı {{role}} olarak atandı.",
+		"admin_user_deleted_successfully": "{{name}} başarılı bir şekilde silindi."
+	},
+	"welcome": "Hang Coffee uygulamasina hoşgeldin",
+	"create": "",
+	"read": "Read User",
+	"update": "Update User",
+	"delete": "Delete User",
+	"register_success": "register_success"
+}

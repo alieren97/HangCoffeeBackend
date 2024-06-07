@@ -1,0 +1,31 @@
+{
+	"login": {
+		"login_invalid_email_or_password": "Invalid Email or password",
+		"login_success": "Logged in sucessfully"
+	},
+	"register": {
+		"register_email_already_exist": "User with given email already exist.",
+		"register_success": "Account created successfully"
+	},
+	"me": {
+		"me_login_first_error": "Login first to access this resource"
+	},
+	"user": {
+		"user_not_found_error": "User not found"
+	},
+	"admin": {
+		"admin_update_role_user_already_has_the_role": "User already has the {{role}}",
+		"admin_update_role_user_updated_successfully": "{{email}} role added into roles as {{role}}",
+        "admin_user_deleted_successfully": "{{name}} deleted successfully"
+	},
+	"welcome": "Welcome to the User CRUD App!",
+	"create": "Create User",
+	"read": "Read User",
+	"update": "Update User",
+	"delete": "Delete User",
+	"invalid signature": "invalid signature",
+	"i18n is not defined": "i18n is not defined",
+	"i18n is not a function": "i18n is not a function",
+	"User already has the employee": "User already has the employee",
+	"admin_update_role_user_updated_successfully": "admin_update_role_user_updated_successfully"
+}
