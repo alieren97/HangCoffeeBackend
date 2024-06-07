@@ -44,6 +44,7 @@ const foodCategoryRouter = require('./routers/foodCategory.js')
 const foodRouter = require('./routers/food.js')
 const adminRouter = require('./routers/admin.js')
 const employerRouter = require('./routers/employer.js')
+const jobRouter = require('./routers/job.js')
 
 /** api routes */
 app.use('/api/v1/cafes', cafeRouter)
@@ -55,6 +56,7 @@ app.use('/api/v1/foodCategory', foodCategoryRouter)
 app.use('/api/v1/food', foodRouter)
 app.use('/api/v1/admin', adminRouter)
 app.use('/api/v1/employer', employerRouter)
+app.use('/api/v1/jobs', jobRouter)
 
 // handle unhandled routes
 app.all('*', (req, res, next) => {
