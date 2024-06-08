@@ -65,5 +65,12 @@
 		"table_added_successfully": "Table added successfully",
 		"table_updated_successfully": "Table updated successfully",
 		"table_deleted_successfully": "Table deleted successfully"
+	},
+	"job": {
+		"job_not_found": "Job not found.",
+		"job_oppurtunity_created_successfully": "Job Oppurtunity Created Successfully",
+		"job_oppurtunity_updated_successfully": "Job oppurtunity updated successfully",
+		"job_not_created_by_you_or_found": "Job not found or it is not created by you",
+		"congrats_you_applied": "Congrats, You applied to the job..."
 	}
 }

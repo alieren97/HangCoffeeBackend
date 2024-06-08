@@ -9,7 +9,7 @@ const { createJobOppurtunityBodyValidation, updateJobOppurtunityBodyValidation }
 exports.createJobOppurtionty = catchAsyncErrors(async (req, res, next) => {
     const cafe = await Cafe.findById(req.user.cafe)
     if (!cafe) {
-        return next(new ErrorHandler('Cafe not found', 404))
+        return next(new ErrorHandler('cafe.cafe_not_found', 404))
     }
 
     const { error } = createJobOppurtunityBodyValidation(req.body)
@@ -20,7 +20,7 @@ exports.createJobOppurtionty = catchAsyncErrors(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        message: "Job Oppurtunity Created Successfully",
+        message: res.__('job.job_oppurtunity_created_successfully'),
     })
 })
 
@@ -38,7 +38,7 @@ exports.getJobs = catchAsyncErrors(async (req, res, next) => {
 exports.getJobsByCafe = catchAsyncErrors(async (req, res, next) => {
     const cafe = await Cafe.findById(req.params.cafeId)
     if (!cafe) {
-        return next(new ErrorHandler('Cafe not found', 404))
+        return next(new ErrorHandler('cafe.cafe_not_found', 404))
     }
 
     const jobs = await Job.find({ cafe: cafe._id })
@@ -53,11 +53,11 @@ exports.getJobsByCafe = catchAsyncErrors(async (req, res, next) => {
 exports.updateJob = catchAsyncErrors(async (req, res, next) => {
     const cafe = await Cafe.findById(req.user.cafe)
     if (!cafe) {
-        return next(new ErrorHandler('Cafe not found', 404))
+        return next(new ErrorHandler('cafe.cafe_not_found', 404))
     }
     const job = await Job.findOne({ _id: req.params.jobId, createdBy: req.user._id })
     if (!job) {
-        return next(new ErrorHandler('Job not found or it is not created by you', 404))
+        return next(new ErrorHandler('job.job_not_created_by_you_or_found', 404))
     }
 
     const { error } = updateJobOppurtunityBodyValidation(req.body)
@@ -67,7 +67,7 @@ exports.updateJob = catchAsyncErrors(async (req, res, next) => {
     await Job.findByIdAndUpdate(req.params.jobId, req.body, { new: true })
     res.status(200).json({
         success: true,
-        message: "Job oppurtunity updated successfully",
+        message: res.__("job.job_oppurtunity_updated_successfully"),
     })
 })
 
@@ -75,7 +75,7 @@ exports.updateJob = catchAsyncErrors(async (req, res, next) => {
 exports.getJob = catchAsyncErrors(async (req, res, next) => {
     const job = await Job.findById(req.params.jobId)
     if (!job) {
-        return next(new ErrorHandler('Job not found', 404))
+        return next(new ErrorHandler('job.job_not_found', 404))
     }
     res.status(200).json({
         success: true,
@@ -87,7 +87,7 @@ exports.getJob = catchAsyncErrors(async (req, res, next) => {
 exports.applyJob = catchAsyncErrors(async (req, res, next) => {
     const job = await Job.findById(req.params.jobId)
     if (!job) {
-        return next(new ErrorHandler('Job not found', 404))
+        return next(new ErrorHandler('job.job_not_found', 404))
     }
 
     const userId = req.body.userId
@@ -95,7 +95,7 @@ exports.applyJob = catchAsyncErrors(async (req, res, next) => {
     await Job.findByIdAndUpdate(req.params.jobId, { $push: { appliedBy: userId } }, { new: true })
     res.status(200).json({
         success: true,
-        message: "Congrats, You applied to the job...",
+        message: res.__("job.congrats_you_applied"),
     })
 })
 
