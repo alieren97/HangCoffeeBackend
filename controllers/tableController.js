@@ -7,7 +7,7 @@ const { createTableBodyValidation, updateTableBodyValidation } = require('../uti
 exports.addTable = catchAsyncErrors(async (req, res, next) => {
     const table = await Table.findOne({ tableName: req.body.tableName, cafe: req.user.cafe })
     if (table) {
-        return next(new ErrorHandler('Table name already exist', 404))
+        return next(new ErrorHandler('table.table_already_exist', 404))
     }
     const { error } = createTableBodyValidation(req.body)
     if (error)
@@ -15,14 +15,14 @@ exports.addTable = catchAsyncErrors(async (req, res, next) => {
     await Table.create({ tableName: req.body.tableName, cafe: req.user.cafe, quota: req.body.quota, tableInfo: req.body.tableInfo })
     res.status(200).json({
         success: true,
-        message: "Table created",
+        message: res.__("table.table_added_successfully"),
     })
 })
 
 exports.getTables = catchAsyncErrors(async (req, res, next) => {
     const cafe = await Cafe.findById(req.params.cafeId)
     if (!cafe) {
-        return next(new ErrorHandler('Cafe not found', 404))
+        return next(new ErrorHandler('cafe.cafe_not_found', 404))
     }
     const tables = await Table.find({ cafe: cafe })
     res.status(200).json({
@@ -36,7 +36,7 @@ exports.getTable = catchAsyncErrors(async (req, res, next) => {
 
     const table = await Table.findById(req.params.tableId)
     if (!table) {
-        return next(new ErrorHandler('Table not found', 404))
+        return next(new ErrorHandler('table.table_not_found', 404))
     }
 
     res.status(200).json({
@@ -49,7 +49,7 @@ exports.updateTable = catchAsyncErrors(async (req, res, next) => {
 
     const table = await Table.findById(req.params.tableId)
     if (!table) {
-        return next(new ErrorHandler('Table not found', 404))
+        return next(new ErrorHandler('table.table_not_found', 404))
     }
     const { error } = updateTableBodyValidation(req.body)
     if (error)
@@ -60,18 +60,18 @@ exports.updateTable = catchAsyncErrors(async (req, res, next) => {
     })
     res.status(200).json({
         success: true,
-        message: "Table updated",
+        message: res.__("table.table_updated_successfully"),
     })
 })
 
 exports.deleteTable = catchAsyncErrors(async (req, res, next) => {
     const table = await Table.findById(req.params.tableId)
     if (!table) {
-        return next(new ErrorHandler('Table not found', 404))
+        return next(new ErrorHandler('table.table_not_found', 404))
     }
     await Table.findByIdAndDelete(req.params.tableId);
     res.status(200).json({
         success: true,
-        message: `${table.tableName} is deleted`,
+        message: res.__("table.table_deleted_successfully"),
     })
 })

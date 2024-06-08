@@ -7,6 +7,12 @@
 		"register_email_already_exist": "Bu email adresi kullanilmaktadir.",
 		"register_success": "Hesabınız başarıyla oluşturuldu"
 	},
+	"refresh": {
+		"refresh_access_token_created_successfully": "Access token başarılı bir şekilde oluşturuldu"
+	},
+	"system": {
+		"internal_server_error": "Server Hatası"
+	},
 	"me": {
 		"me_login_first_error": "Kaynağa ulaşmak için önce giriş yapmalısın."
 	},
@@ -39,5 +45,24 @@
 		"employer_there_is_no_employee": "Bu bilgiye sahip bir çalışan bilgisi bulunmamaktadır",
 		"employer_updated_the_current_employee_working_type": "{{userName}}, rolü {{role}} olarak güncellendi.",
 		"employer_deleted_the_employee_successfully": "{{userName}}, successfully deleted from your cafe as employee"
+	},
+	"category": {
+		"category_not_found": "Kategoryi bulunamadi.",
+		"category_added_successfully": "Yemek kategorisi başarıyla eklendi.",
+		"category_updated_successfully": "Yemek kategorisi başarıyla güncellendi.",
+		"category_deleted_successfully": "Yemek kategorisi başarıyla silindi."
+	},
+	"food": {
+		"food_not_found": "Yiyecek bulunamadi.",
+		"food_added_successfully": "Yiyecek başarıyla eklendi",
+		"food_updated_successfully": "Yiyecek başarıyla güncellendi",
+		"food_deleted_successfully": "Yiyecek başarıyla silindi."
+	},
+	"table": {
+		"table_not_found": "Masa bulunamadi.",
+		"table_already_exist": "Table ismi zaten kullanılıyor.",
+		"table_added_successfully": "Masa başarıyla eklendi",
+		"table_updated_successfully": "Masa başarıyla güncellendi",
+		"table_deleted_successfully": "Masa başarıyla silindi"
 	}
 }

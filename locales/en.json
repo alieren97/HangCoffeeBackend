@@ -7,6 +7,13 @@
 		"register_email_already_exist": "User with given email already exist.",
 		"register_success": "Account created successfully"
 	},
+	"refresh": {
+		"refresh_access_token_created_successfully": "Access token created successfully",
+		"logout_successfully": "Logged Out Sucessfully"
+	},
+	"system": {
+		"internal_server_error": "Internal Server Error"
+	},
 	"me": {
 		"me_login_first_error": "Login first to access this resource"
 	},
@@ -39,5 +46,24 @@
 		"employer_there_is_no_employee": "There is no Employee with that user information",
 		"employer_updated_the_current_employee_working_type": "{{userName}}, working type updated to {{role}}",
 		"employer_deleted_the_employee_successfully": "{{userName}}, kafenizden başarılı bir şekilde kovuldu :D"
+	},
+	"category": {
+		"category_not_found": "Category not found",
+		"category_added_successfully": "Food category added successfully.",
+		"category_updated_successfully": "Food category updated successfully.",
+		"category_deleted_successfully": "Food category deleted successfully."
+	},
+	"food": {
+		"food_not_found": "Food not found",
+		"food_added_successfully": "Food added successfully",
+		"food_updated_successfully": "Food updated successfully",
+		"food_deleted_successfully": "Food deleted successfully"
+	},
+	"table": {
+		"table_not_found": "Table not found",
+		"table_already_exist": "Table name already exist",
+		"table_added_successfully": "Table added successfully",
+		"table_updated_successfully": "Table updated successfully",
+		"table_deleted_successfully": "Table deleted successfully"
 	}
 }
