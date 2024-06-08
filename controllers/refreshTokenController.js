@@ -20,7 +20,7 @@ exports.getNewAccessToken = catchAsyncErrors(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        message: "Access token created successfully",
+        message: res.__("refresh.refresh_access_token_created_successfully"),
         data: {
             accessToken,
         }
@@ -34,11 +34,11 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
         if (!userToken)
             return res
                 .status(200)
-                .json({ success: true, message: "Logged Out Sucessfully" });
+                .json({ success: true, message: res.__("refresh.logout_successfully") });
 
         await userToken.deleteOne();
-        res.status(200).json({ success: true, message: "Logged Out Sucessfully" });
+        res.status(200).json({ success: true, message: res.__("refresh.logout_successfully") });
     } catch (err) {
-        return next(new ErrorHandler("Internal Server Error", 500));
+        return next(new ErrorHandler("system.internal_server_error", 500));
     }
 })
