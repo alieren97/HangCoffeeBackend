@@ -12,7 +12,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
     var user = await User.findOne({ email: req.body.email })
     if (user) {
-        return next(new ErrorHandler('User with given email already exist', 400))
+        return next(new ErrorHandler('register.register_email_already_exist', 400))
     }
     user = await User.create({
         name: req.body.name,
@@ -24,7 +24,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
         .status(201)
         .json({
             success: true,
-            message: "Account created sucessfully"
+            message: res.__("register.register_success")
         });
 })
 
@@ -35,19 +35,19 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
     const user = await User.findOne({ email: req.body.email }).select('+password');
     if (!user) {
-        return next(new ErrorHandler('Invalid Email or password', 401))
+        return next(new ErrorHandler('login.login_invalid_email_or_password', 401))
     }
 
     const isPasswordMatched = await user.comparePassword(req.body.password)
     if (!isPasswordMatched) {
-        return next(new ErrorHandler('Invalid Email or password', 401))
+        return next(new ErrorHandler('login.login_invalid_email_or_password', 401))
     }
 
     const { accessToken, refreshToken } = await generateTokens(user);
 
     res.status(200).json({
         success: true,
-        message: "Logged in sucessfully",
+        message: res.__("login.login_success"),
         data: {
             accessToken,
             refreshToken,
@@ -64,16 +64,17 @@ exports.findByToken = catchAsyncErrors(async (req, res, next) => {
     }
 
     if (!token) {
-        return next(new ErrorHandler("Login first to access this resource", 401))
+        return next(new ErrorHandler("me.me_login_first_error", 401))
     }
 
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_PRIVATE_KEY)
     const user = await User.findById(decoded._id)
     if (!user)
-        return next(new ErrorHandler("User not found", 401))
+        return next(new ErrorHandler("user.user_not_found_error", 401))
 
     res.status(200).json({
         success: true,
+        message: null,
         data: user
     })
 })

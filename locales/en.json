@@ -1,0 +1,69 @@
+{
+	"login": {
+		"login_invalid_email_or_password": "Invalid Email or password",
+		"login_success": "Logged in sucessfully"
+	},
+	"register": {
+		"register_email_already_exist": "User with given email already exist.",
+		"register_success": "Account created successfully"
+	},
+	"refresh": {
+		"refresh_access_token_created_successfully": "Access token created successfully",
+		"logout_successfully": "Logged Out Sucessfully"
+	},
+	"system": {
+		"internal_server_error": "Internal Server Error"
+	},
+	"me": {
+		"me_login_first_error": "Login first to access this resource"
+	},
+	"user": {
+		"user_not_found_error": "User not found"
+	},
+	"admin": {
+		"admin_update_role_user_already_has_the_role": "User already has the {{role}}",
+		"admin_update_role_user_updated_successfully": "{{email}} role added into roles as {{role}}",
+		"admin_user_deleted_successfully": "{{name}} deleted successfully"
+	},
+	"cafe": {
+		"cafe_not_found_error": "Cafe not found",
+		"cafe_already_has_the_same_name_error": "There is a cafe with the same name with {{{{cafeName}}}}",
+		"cafe_created_successfully": "Cafe created successfully.",
+		"cafe_updated_successfully": "Cafe updated successfully.",
+		"cafe_deleted_successfully": "Cafe with the name {{cafeName}} deleted successfully."
+	},
+	"comment": {
+		"comment_employee_cant_make_comment_to_working_cafe": "Cafe employee can not make comment",
+		"comment_employer_cant_make_comment_to_working_cafe": "Cafe owner can not make comment to his/her own cafe.",
+		"comment_added_successfully": "Comment added successfully",
+		"comment_not_found": "Comment not found",
+		"comment_delete_have_to_be_owner_this_cafe": "You have to owner of this cafe to delete this comment",
+		"comment_deleted_successfully": "{{comment}} deleted successfully"
+	},
+	"employer": {
+		"employer_add_employee_user_already_working": "User already working in a cafe",
+		"employer_add_employee_user_added": "{{userName}} added as employee to your cafe as {{role}}",
+		"employer_there_is_no_employee": "There is no Employee with that user information",
+		"employer_updated_the_current_employee_working_type": "{{userName}}, working type updated to {{role}}",
+		"employer_deleted_the_employee_successfully": "{{userName}}, kafenizden başarılı bir şekilde kovuldu :D"
+	},
+	"category": {
+		"category_not_found": "Category not found",
+		"category_added_successfully": "Food category added successfully.",
+		"category_updated_successfully": "Food category updated successfully.",
+		"category_deleted_successfully": "Food category deleted successfully."
+	},
+	"food": {
+		"food_not_found": "Food not found",
+		"food_added_successfully": "Food added successfully",
+		"food_updated_successfully": "Food updated successfully",
+		"food_deleted_successfully": "Food deleted successfully"
+	},
+	"table": {
+		"table_not_found": "Table not found",
+		"table_already_exist": "Table name already exist",
+		"table_added_successfully": "Table added successfully",
+		"table_updated_successfully": "Table updated successfully",
+		"table_deleted_successfully": "Table deleted successfully"
+	}
+}

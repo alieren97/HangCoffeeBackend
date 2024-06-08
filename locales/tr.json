@@ -1,0 +1,68 @@
+{
+	"login": {
+		"login_invalid_email_or_password": "Geçersiz email veya şifre",
+		"login_success": "Giriş başarılı."
+	},
+	"register": {
+		"register_email_already_exist": "Bu email adresi kullanilmaktadir.",
+		"register_success": "Hesabınız başarıyla oluşturuldu"
+	},
+	"refresh": {
+		"refresh_access_token_created_successfully": "Access token başarılı bir şekilde oluşturuldu"
+	},
+	"system": {
+		"internal_server_error": "Server Hatası"
+	},
+	"me": {
+		"me_login_first_error": "Kaynağa ulaşmak için önce giriş yapmalısın."
+	},
+	"user": {
+		"user_not_found_error": "Kullanıcı bulunamadı."
+	},
+	"admin": {
+		"admin_update_role_user_already_has_the_role": "Kullanıcı zaten {{role}} olarak kayıtlı.",
+		"admin_update_role_user_updated_successfully": "{{email}} email adresine sahip olan kullanıcı {{role}} olarak atandı.",
+		"admin_user_deleted_successfully": "{{name}} başarılı bir şekilde silindi."
+	},
+	"cafe": {
+		"cafe_not_found_error": "Cafe bulunamadı",
+		"cafe_already_has_the_same_name_error": "Bu {{cafeName}} isime sahip bir cafe bulunmaktadır.",
+		"cafe_created_successfully": "Cafe başarılı bir şekilde oluşturuldu.",
+		"cafe_updated_successfully": "Cafe başarılı bir şekilde güncellendi.",
+		"cafe_deleted_successfully": "{{cafeName}} başarılı bir şekilde silindi."
+	},
+	"comment": {
+		"comment_employee_cant_make_comment_to_working_cafe": "Cafede çalışan çalışanlar yorum yapamaz!.",
+		"comment_employer_cant_make_comment_to_working_cafe": "Kafe sahibi kendi kafesine yorum yapamaz!.",
+		"comment_added_successfully": "Yorum başarılı bir şekilde gönderildi.",
+		"comment_not_found": "Yorum bulunamadı",
+		"comment_delete_have_to_be_owner_this_cafe": "Bu yorumu silebilmek için kafenin sahibi olmanız gerekiyor.",
+		"comment_deleted_successfully": "{{comment}} başarılı bir şekilde silindi."
+	},
+	"employer": {
+		"employer_add_employee_user_already_working": "Kullanıcı zaten bir kafede çalışıyor",
+		"employer_add_employee_user_added": "{{userName}} adlı kullanıcı başarılı bir şekilde kafenizde {{role}} olarak çalışmaya başladı.",
+		"employer_there_is_no_employee": "Bu bilgiye sahip bir çalışan bilgisi bulunmamaktadır",
+		"employer_updated_the_current_employee_working_type": "{{userName}}, rolü {{role}} olarak güncellendi.",
+		"employer_deleted_the_employee_successfully": "{{userName}}, successfully deleted from your cafe as employee"
+	},
+	"category": {
+		"category_not_found": "Kategoryi bulunamadi.",
+		"category_added_successfully": "Yemek kategorisi başarıyla eklendi.",
+		"category_updated_successfully": "Yemek kategorisi başarıyla güncellendi.",
+		"category_deleted_successfully": "Yemek kategorisi başarıyla silindi."
+	},
+	"food": {
+		"food_not_found": "Yiyecek bulunamadi.",
+		"food_added_successfully": "Yiyecek başarıyla eklendi",
+		"food_updated_successfully": "Yiyecek başarıyla güncellendi",
+		"food_deleted_successfully": "Yiyecek başarıyla silindi."
+	},
+	"table": {
+		"table_not_found": "Masa bulunamadi.",
+		"table_already_exist": "Table ismi zaten kullanılıyor.",
+		"table_added_successfully": "Masa başarıyla eklendi",
+		"table_updated_successfully": "Masa başarıyla güncellendi",
+		"table_deleted_successfully": "Masa başarıyla silindi"
+	}
+}

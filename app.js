@@ -10,6 +10,7 @@ const swaggerUI = require('swagger-ui-express')
 const swaggerDoc = YAML.load('./swagger.yaml')
 const config = require('./config/configs.js');
 const rateLimit = require("express-rate-limit");
+const i18n = require('./config/i18nConfig.js')
 
 process.on('uncaughtException', err => {
     console.log(`ERROR: ${err.message}`);
@@ -28,12 +29,20 @@ connectDatabase()
 /** middlewares */
 app.enable("trust proxy")
 app.use(express.json());
+app.use(i18n.init)
 app.use(limiter);
 app.use(cors());
 app.use(morgan('tiny'));
 app.disable('x-powered-by'); // less hackers know about our stack
 app.use('/api/v1/swagger/docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
-
+// Middleware to handle Accept-Language header
+app.use((req, res, next) => {
+    const lang = req.acceptsLanguages(i18n.getLocales());
+    if (lang) {
+        i18n.setLocale(req, lang);
+    }
+    next();
+});
 
 const authRouter = require('./routers/auth.js')
 const refreshToken = require('./routers/refreshToken.js')
