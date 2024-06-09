@@ -64,5 +64,11 @@
 		"table_added_successfully": "Masa başarıyla eklendi",
 		"table_updated_successfully": "Masa başarıyla güncellendi",
 		"table_deleted_successfully": "Masa başarıyla silindi"
+	},
+	"check": {
+		"check_not_found": "Hesap bulunamadı.",
+		"check_table_already_have_error": "Belirtilen masada zaten bir hesap bulunmaktadır.",
+		"check_already_paid": "Bu hesab zaten ödenmiştir.",
+		"check_paid_successfully": "Hesap başarıyla ödendi ve kapandı"
 	}
 }
