@@ -70,6 +70,8 @@
 		"check_not_found": "Check not found",
 		"check_table_already_have_error": "There is already a check in that table",
 		"check_already_paid": "This check already paid.",
-		"check_paid_successfully": "Check successfully paid and closed"
+		"check_paid_successfully": "Check successfully paid and closed",
+		"check_items_updated_successfully": "Items added into  table",
+		"check_created_successfully": "Check successfully created"
 	}
 }

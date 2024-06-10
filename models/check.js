@@ -4,12 +4,13 @@ const Table = require('./table')
 const checkSchema = new mongoose.Schema({
     table: {
         type: mongoose.Schema.ObjectId,
-        ref: 'Table'
+        ref: 'Table',
+        required: true
     },
-    // foods: [{
-    //     type: mongoose.Schema.ObjectId,
-    //     ref: 'BasketFood'
-    // }],
+    foods: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'CheckFood'
+    }],
     cafe: {
         type: mongoose.Schema.ObjectId,
         ref: 'Cafe',
@@ -42,10 +43,5 @@ const checkSchema = new mongoose.Schema({
         default: false
     }
 })
-
-checkSchema.pre('save', async function () {
-    await Table.findByIdAndUpdate(this.table, { $set: { check: check.id } }, { new: true })
-})
-
 
 module.exports = mongoose.model('Check', checkSchema, 'check')

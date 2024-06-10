@@ -69,6 +69,8 @@
 		"check_not_found": "Hesap bulunamadı.",
 		"check_table_already_have_error": "Belirtilen masada zaten bir hesap bulunmaktadır.",
 		"check_already_paid": "Bu hesab zaten ödenmiştir.",
-		"check_paid_successfully": "Hesap başarıyla ödendi ve kapandı"
+		"check_paid_successfully": "Hesap başarıyla ödendi ve kapandı",
+		"check_items_updated_successfully": "Ürünler başarılı bir şekilde eklendi",
+		"check_created_successfully": "Hesap başarılı bir şekilde oluşturuldu"
 	}
 }

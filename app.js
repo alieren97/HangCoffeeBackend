@@ -53,7 +53,7 @@ const foodCategoryRouter = require('./routers/foodCategory.js')
 const foodRouter = require('./routers/food.js')
 const adminRouter = require('./routers/admin.js')
 const employerRouter = require('./routers/employer.js')
-const checkRouter = require('./routers/cheks.js')
+const checkRouter = require('./routers/check.js')
 
 /** api routes */
 app.use('/api/v1/cafes', cafeRouter)
