@@ -99,3 +99,11 @@ exports.applyJob = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
+exports.deleteJob = catchAsyncErrors(async (req, res, next) => {
+    await Job.findByIdAndDelete(req.params.jobId)
+    res.status(200).json({
+        success: true,
+        message: res.__("job.job_oppurtunity_deleted_successfully"),
+    })
+})
+
