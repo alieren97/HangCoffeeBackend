@@ -87,10 +87,7 @@ exports.updateCafe = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.getJob = catchAsyncErrors(async (req, res, next) => {
-    const job = await Job.findById(req.params.jobId).populate('appliedBy')
-    if (!req.user.cafe.equals(job.cafe)) {
-        return next(new ErrorHandler('You are not belong to this cafe', 404))
-    }
+    const job = await Job.find({ _id: req.params.jobId, createdBy: req.user._id }).populate('appliedBy')
 
     res.status(200).json({
         success: true,

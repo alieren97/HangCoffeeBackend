@@ -17,6 +17,6 @@ jobRouter.route('/apply/:jobId')
 
 jobRouter.route('/:jobId')
     .get(isAuthenticatedUser, jobController.getJob)
-    .put(isAuthenticatedUser, authorizeRoles('employer', 'admin', 'super admin'), jobController.updateJob)
+    .put(isAuthenticatedUser, checkOwner, jobController.updateJob)
 
 module.exports = jobRouter

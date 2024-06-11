@@ -111,8 +111,8 @@ components:
           type: string
           example: 655a35d7bd1bc32a1d44554a
         cafe:
-          type: object
-          $ref: "#/components/schemas/Cafe"
+          type: string
+          $ref: 655a35d7bd1bc32a1d44554a
         foodImage:
           type: string
           example: test.image
@@ -122,6 +122,82 @@ components:
         price:
           type: integer
           example: 100
+    Check:
+      properties:
+        _id:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        table:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        foods:
+          type: array
+          items:
+            type: object
+            $ref: "#/components/schemas/CheckFood"
+        cafe:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        total_price:
+          type: integer
+          example: 1190
+        isPaid:
+          type: boolean
+          example: false
+        createdAt:
+          type: string
+          example: "2024-06-11T13:41:01.415Z"
+    CheckFood:
+      properties:
+        _id:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        user:
+          type: object
+          $ref: "#/components/schemas/User"
+        food:
+          type: object
+          $ref: "#/components/schemas/Food"
+        table:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        check:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        quantity:
+          type: integer
+          example: 3
+        createdAt:
+          type: string
+          example: "2024-06-11T13:41:01.415Z"
+    Job:
+      properties:
+        _id:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        createdBy:
+          type: string
+          $ref: 655a35d7bd1bc32a1d44554a
+        cafe:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        position:
+          type: string
+          example: Service
+        job_type:
+          type: string
+          example: Part-Time
+        experience_type:
+          type: string
+          example: 0-1 year
+        appliedBy:
+          type: array
+          items:
+            type: string
+            example: 655a35d7bd1bc32a1d44554a
+        createdAt:
+          type: string
+          example: "2024-06-11T13:41:01.415Z"
   securitySchemes:
     bearerAuth: # arbitrary name for the security scheme
       description: JWT Authorization
@@ -798,6 +874,57 @@ paths:
                   message:
                     type: string
                     example: cafe did not found
+  /employer/checks:
+    get:
+      tags: [Employer]
+      description: >
+        Payment of the check
+      summary: Payment of the check
+      parameters:
+        - in: query
+          name: isPaid
+          schema:
+            type: boolean
+          description: If you want to see paid checks make it true or false otherwise it will send you all checks
+      responses:
+        "200":
+          description: It will success message if check paid successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 3
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Check"
+  /employer/job/{jobId}:
+    get:
+      tags: [Employer]
+      description: >
+        Get job for employer to see users who applied by jobId
+      summary: Get job for employer to see users who applied by jobId
+      responses:
+        "200":
+          description: It will return Job object with applicant information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Job"
   /cafes:
     get:
       tags: [Cafe]
@@ -1019,7 +1146,7 @@ paths:
       tags: [Table]
       description: >
         Only Employer can Create Table for a specific Cafe
-      summary:  Only Employer can Create Table for a specific Cafe
+      summary: Only Employer can Create Table for a specific Cafe
       requestBody:
         content:
           application/json:
@@ -1564,14 +1691,16 @@ paths:
       tags: [Food]
       description: >
         Only Employer can Create a Food By Cafe Id and Category Id
-      summary:  Only Employer can Create a Food By Cafe Id and Category Id
+      summary: Only Employer can Create a Food By Cafe Id and Category Id
       requestBody:
         content:
           application/json:
             schema:
               type: object
               required:
-                - message
+                - foodImage
+                - foodName
+                - price
               properties:
                 foodImage:
                   type: string
@@ -1664,3 +1793,333 @@ paths:
                     items:
                       type: object
                       $ref: "#/components/schemas/Food"
+  /check/table/{tableId}:
+    post:
+      tags: [Check]
+      description: >
+        Create or Update Check
+      summary: Create or Update Check
+      parameters:
+        - in: path
+          name: tableId
+          schema:
+            type: string
+          required: true
+          description: The id of table
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - checkFoods
+              properties:
+                checkFoods:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      food:
+                        type: string
+                        default: 665f315a9610fe06b5ce2a21
+                      quantity:
+                        type: integer
+                        default: 2
+      responses:
+        "200":
+          description: It will success message if check created or updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 4
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Food"
+  /check/{checkId}:
+    get:
+      tags: [Check]
+      description: >
+        Get The Check with check id
+      summary: Get The Check with check id
+      parameters:
+        - in: path
+          name: checkId
+          schema:
+            type: string
+          required: true
+          description: The id of check
+      responses:
+        "200":
+          description: It will success message if check created or updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Check"
+  /check/{checkId}/paid:
+    put:
+      tags: [Check]
+      description: >
+        Payment of the check
+      summary: Payment of the check
+      parameters:
+        - in: path
+          name: checkId
+          schema:
+            type: string
+          required: true
+          description: The id of check
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - payment_method
+              properties:
+                payment_method:
+                  type: string
+                  default: Credit Cart
+              example:
+                payment_method: Credit Cart
+      responses:
+        "200":
+          description: It will success message if check paid successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Payment done
+  /jobs/createJob:
+    post:
+      tags: [Job]
+      description: >
+        Only Employers can create a job
+      summary: Only Employers can create a job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - position
+                - job_type
+                - experience_type
+              properties:
+                position:
+                  type: string
+                  default: Service
+                job_type:
+                  type: string
+                  default: Part-Time
+                experience_type:
+                  type: string
+                  default: 0-1 year
+              example:
+                foodImage: Service
+                foodName: Part-Time
+                price: 0-1 year
+      responses:
+        "200":
+          description: Job Oppurtunity created succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Job Oppurtunity created succesfully
+  /jobs:
+    get:
+      tags: [Job]
+      description: >
+        Get All Jobs
+      summary: Get All Jobs
+      responses:
+        "200":
+          description: Get All Jobs list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 2
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Job"
+  /jobs/cafe/{cafeId}:
+    get:
+      tags: [Job]
+      description: >
+        Get Jobs By Cafe Id
+      summary: Get Jobs By Cafe Id
+      parameters:
+        - in: path
+          name: cafeId
+          schema:
+            type: string
+          required: true
+          description: The id of cafe
+      responses:
+        "200":
+          description: Get All Jobs list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 2
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Job"
+  /jobs/apply/{jobId}:
+    put:
+      tags: [Job]
+      description: >
+        Apply to a job
+      summary: Apply to a job
+      parameters:
+        - in: path
+          name: jobId
+          schema:
+            type: string
+          required: true
+          description: The id of specific job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+              properties:
+                userId:
+                  type: string
+                  default: 665f07ca6d6b1532678f1185
+              example:
+                userId: 665f07ca6d6b1532678f1185
+      responses:
+        "200":
+          description: Successfully applied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Your application received
+  /jobs/{jobId}:
+    get:
+      tags: [Job]
+      description: >
+        Get a specific job
+      summary: Get a specific job
+      parameters:
+        - in: path
+          name: jobId
+          schema:
+            type: string
+          required: true
+          description: The id of job
+      responses:
+        "200":
+          description: Return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Job"
+    put:
+      tags: [Job]
+      description: >
+        Owner of the job advert can update the advert
+      summary: Owner of the job advert can update the advert
+      parameters:
+        - in: path
+          name: jobId
+          schema:
+            type: string
+          required: true
+          description: The id of job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                position:
+                  type: string
+                  default: Barista
+                job_type:
+                  type: string
+                  default: Full-Time
+                experience_type:
+                  type: string
+                  default: 2 years
+              example:
+                position: Barista
+                job_type: Full-Time
+                experience_type: 2 years
+      responses:
+        "200":
+          description: It will success message if job advert updated succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: job advert updated succesfully
