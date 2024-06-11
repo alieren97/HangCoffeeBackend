@@ -1,5 +1,6 @@
 const User = require('../models/user')
 const Cafe = require('../models/cafe')
+const Job = require('../models/job')
 const Employee = require('../models/employee')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const ErrorHandler = require('../utils/errorHandler')
@@ -81,5 +82,18 @@ exports.updateCafe = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
         success: true,
         message: res._('cafe.cafe_updated_successfully'),
+    })
+})
+
+exports.getJob = catchAsyncErrors(async (req, res, next) => {
+    const job = await Job.findById(req.params.jobId).populate('appliedBy')
+    if (!req.user.cafe.equals(job.cafe)) {
+        return next(new ErrorHandler('You are not belong to this cafe', 404))
+    }
+
+    res.status(200).json({
+        success: true,
+        message: null,
+        data: job
     })
 })
