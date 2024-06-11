@@ -72,5 +72,13 @@
 		"job_oppurtunity_updated_successfully": "Job oppurtunity updated successfully",
 		"job_not_created_by_you_or_found": "Job not found or it is not created by you",
 		"congrats_you_applied": "Congrats, You applied to the job..."
+	},
+	"check": {
+		"check_not_found": "Check not found",
+		"check_table_already_have_error": "There is already a check in that table",
+		"check_already_paid": "This check already paid.",
+		"check_paid_successfully": "Check successfully paid and closed",
+		"check_items_updated_successfully": "Items added into  table",
+		"check_created_successfully": "Check successfully created"
 	}
 }
