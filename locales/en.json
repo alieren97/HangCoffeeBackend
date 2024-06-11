@@ -71,7 +71,8 @@
 		"job_oppurtunity_created_successfully": "Job Oppurtunity Created Successfully",
 		"job_oppurtunity_updated_successfully": "Job oppurtunity updated successfully",
 		"job_not_created_by_you_or_found": "Job not found or it is not created by you",
-		"congrats_you_applied": "Congrats, You applied to the job..."
+		"congrats_you_applied": "Congrats, You applied to the job...",
+		"job_oppurtunity_deleted_successfully": "Job Oppurtunity Deleted Successfully"
 	},
 	"check": {
 		"check_not_found": "Check not found",

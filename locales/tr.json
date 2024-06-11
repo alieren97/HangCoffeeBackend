@@ -70,7 +70,8 @@
 		"job_oppurtunity_created_successfully": "İş Fırsatı başarıyla oluşturuldu.",
 		"job_oppurtunity_updated_successfully": "İş Fırsatı başarıyla güncellendi.",
 		"job_not_created_by_you_or_found": "İş ilanı sizin tarafınızdan oluşuturulmadı veya bulunamadı.",
-		"congrats_you_applied": "Tebrikler, iş fırsatına başarıyla başvurdunuz"
+		"congrats_you_applied": "Tebrikler, iş fırsatına başarıyla başvurdunuz",
+		"job_oppurtunity_deleted_successfully": "İş Fırsatı başarıyla silindi."
 	},
 	"check": {
 		"check_not_found": "Hesap bulunamadı.",
