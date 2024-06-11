@@ -33,7 +33,7 @@ exports.addCheck = catchAsyncErrors(async (req, res, next) => {
             } else {
                 const checkFood = await CheckFood.create({ user: req.user.id, table: req.params.tableId, check: check.id, quantity: item.quantity, food: item.food })
                 const food = await Food.findById(item.food)
-                total += updated.quantity * food.price
+                total += item.quantity * food.price
                 check.foods.push(checkFood)
             }
         }
@@ -42,7 +42,6 @@ exports.addCheck = catchAsyncErrors(async (req, res, next) => {
         return res.status(200).json({
             success: true,
             message: res.__("check.check_items_updated_successfully"),
-            data: check
         })
     }
 
