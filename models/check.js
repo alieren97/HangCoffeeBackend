@@ -7,9 +7,9 @@ const checkSchema = new mongoose.Schema({
         ref: 'Table',
         required: true
     },
-    foods: [{
+    orders: [{
         type: mongoose.Schema.ObjectId,
-        ref: 'CheckFood'
+        ref: 'Order'
     }],
     cafe: {
         type: mongoose.Schema.ObjectId,

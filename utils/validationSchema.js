@@ -117,3 +117,13 @@ exports.updateJobOppurtunityBodyValidation = (body) => {
 
     return schema.validate(body)
 }
+
+exports.createCheckBodyValidation = (body) => {
+    const schema = Joi.object({
+        position: Joi.string().valid('Barista', 'Service', 'Chef', 'Manager').required(),
+        job_type: Joi.string().valid('Full-Time', 'Part-Time').required(),
+        experience_type: Joi.string().valid('0-1 year', '2 years', '2+ years').required()
+    })
+
+    return schema.validate(body)
+}
