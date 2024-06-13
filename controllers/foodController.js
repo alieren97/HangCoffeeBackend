@@ -3,7 +3,7 @@ const FoodCategory = require('../models/foodCategory')
 const Food = require('../models/food')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const ErrorHandler = require('../utils/errorHandler')
-const { createFoodBodyValidation } = require('../utils/validationSchema.js')
+const { createFoodBodyValidation, updateFoodBodyValidation } = require('../utils/validationSchema.js')
 
 exports.addFood = catchAsyncErrors(async (req, res, next) => {
     const cafe = await Cafe.findById(req.user.cafe)
@@ -74,6 +74,10 @@ exports.updateFood = catchAsyncErrors(async (req, res, next) => {
     if (!food) {
         return next(new ErrorHandler('food.food_not_found', 404))
     }
+    const { error } = updateFoodBodyValidation(req.body)
+    if (error)
+        return next(new ErrorHandler(error.details[0].message), 400)
+    
     const updatedFood = await Food.findByIdAndUpdate(foodId, { $set: req.body }, { new: true })
     res.status(200).json({
         success: true,
@@ -95,4 +99,3 @@ exports.getFoodsByCategoryId = catchAsyncErrors(async (req, res, next) => {
         data: foods
     })
 })
-

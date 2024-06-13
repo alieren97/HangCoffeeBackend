@@ -81,8 +81,23 @@ exports.createFoodBodyValidation = (body) => {
     const schema = Joi.object({
         foodImage: Joi.string().min(3).max(200).required(),
         foodName: Joi.string().min(3).max(50).required(),
+        foodDetail: Joi.string().min(3).max(500).required(),
+        foodDetailCategory: Joi.string().valid('Gluten-Free', 'Vegan'),
         price: Joi.number().required(),
         foodCategory: Joi.string().required()
+    })
+
+    return schema.validate(body)
+}
+
+exports.updateFoodBodyValidation = (body) => {
+    const schema = Joi.object({
+        foodImage: Joi.string().min(3).max(200),
+        foodName: Joi.string().min(3).max(50),
+        foodDetail: Joi.string().min(3).max(500),
+        foodDetailCategory: Joi.string().valid('Gluten-Free', 'Vegan'),
+        price: Joi.number(),
+        foodCategory: Joi.string()
     })
 
     return schema.validate(body)

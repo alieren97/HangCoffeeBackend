@@ -9,6 +9,17 @@ const foodScheme = new mongoose.Schema({
         type: String,
         required: [true, "Please enter a name for the food"]
     },
+    foodDetail: {
+        type: String,
+        required: [true, "Please enter a detail for the food"]
+    },
+    foodDetailCategory: {
+        type: [String],
+        enum: {
+            values: ['Gluten-Free', 'Vegan'],
+            message: 'Please select correct food detail category type'
+        },
+    },
     price: {
         type: Number,
         required: [true, "Please enter a price for this food"]
