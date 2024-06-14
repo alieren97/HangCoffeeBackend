@@ -17,6 +17,4 @@ employeerRouter.route('/updateCafe')
 employeerRouter.route('/job/:jobId')
     .get(isAuthenticatedUser, checkOwner, employerController.getJob)
 
-employeerRouter.route('/checks').get(isAuthenticatedUser, checkOwner, employerController.getAllChecks)
-
 module.exports = employeerRouter

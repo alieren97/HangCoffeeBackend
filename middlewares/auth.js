@@ -42,6 +42,15 @@ exports.checkOwner = catchAsyncErrors(async (req, res, next) => {
     next()
 })
 
+exports.checkEmployee = catchAsyncErrors(async (req, res, next) => {
+    const cafe = await Cafe.findById(req.user.cafe)
+    if (req.user.cafe == null || (!cafe.employees.some(r => r.equals(req.user._id)) && cafe.owner != req.user.id)) {
+        return next(new ErrorHandler('You have to be the owner or employee of this cafe', 403))
+    }
+    next()
+})
+
+
 exports.checkOwnerForComment = catchAsyncErrors(async (req, res, next) => {
     const comment = await Comment.findById(req.params.commentId)
     const cafe = await Cafe.findById(comment.cafe)

@@ -7,9 +7,9 @@ const checkSchema = new mongoose.Schema({
         ref: 'Table',
         required: true
     },
-    foods: [{
+    orders: [{
         type: mongoose.Schema.ObjectId,
-        ref: 'CheckFood'
+        ref: 'Order'
     }],
     cafe: {
         type: mongoose.Schema.ObjectId,
@@ -42,6 +42,26 @@ const checkSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
+})
+
+checkSchema.pre('save', async function () {
+    var check = await this.populate({
+        path: 'orders',
+        populate: {
+            path: 'foods',
+            populate: {
+                path: 'food'
+            }
+        }
+    })
+    var total_price = 0
+    for await (var order of check.orders) {
+        for await (var food of order.foods) {
+            total_price += food.quantity * food.food.price
+        }
+    }
+    console.log(total_price)
+    this.total_price = total_price
 })
 
 module.exports = mongoose.model('Check', checkSchema, 'check')

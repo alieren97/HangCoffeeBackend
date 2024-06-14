@@ -80,5 +80,12 @@
 		"check_paid_successfully": "Hesap başarıyla ödendi ve kapandı",
 		"check_items_updated_successfully": "Ürünler başarılı bir şekilde eklendi",
 		"check_created_successfully": "Hesap başarılı bir şekilde oluşturuldu"
+	},
+	"order": {
+		"order_not_found": "Sipariş bulunamadı",
+		"order_created_successfully": "Sipariş başarılı bir şekilde oluşturuldu.",
+		"order_already_approved": "Sipariş daha önceden onaylanmış.",
+		"order_successfully_declined": "Sipariş başarıyla reddedildi.",
+		"order_successfully_approved": "Sipariş başarıyla onaylandı."
 	}
 }

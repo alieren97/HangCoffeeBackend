@@ -1,11 +1,11 @@
 const express = require('express');
 const checkRouter = express.Router();
 const checkController = require('../controllers/checkController')
-const { isAuthenticatedUser } = require('../middlewares/auth')
+const { isAuthenticatedUser, checkEmployee } = require('../middlewares/auth')
 
-checkRouter.post('/table/:tableId', isAuthenticatedUser, checkController.addCheck)
 checkRouter.route('/:checkId').get(isAuthenticatedUser, checkController.getCheckByTableId)
-checkRouter.route('/:checkId/paid').put(isAuthenticatedUser, checkController.checkPaid)
+checkRouter.route('/:checkId/paid').put(isAuthenticatedUser, checkEmployee, checkController.checkPaid)
+checkRouter.route('/').get(isAuthenticatedUser, checkEmployee, checkController.getChecksByCafe)
 
 module.exports = checkRouter;
 
