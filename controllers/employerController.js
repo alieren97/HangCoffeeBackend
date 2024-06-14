@@ -2,7 +2,6 @@ const User = require('../models/user')
 const Cafe = require('../models/cafe')
 const Job = require('../models/job')
 const Employee = require('../models/employee')
-const Check = require('../models/check')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const ErrorHandler = require('../utils/errorHandler')
 const i18n = require('i18n')
@@ -93,15 +92,5 @@ exports.getJob = catchAsyncErrors(async (req, res, next) => {
         success: true,
         message: null,
         data: job
-    })
-})
-
-exports.getAllChecks = catchAsyncErrors(async (req, res, next) => {
-    const query = req.query;
-    const checks = Object.keys(query).length === 0 ? await Check.find({ cafe: req.user.cafe }) : await Check.find({ cafe: req.user.cafe, isPaid: query.isPaid });
-    res.status(200).json({
-        success: true,
-        length: checks.length,
-        data: checks
     })
 })

@@ -147,6 +147,37 @@ components:
         createdAt:
           type: string
           example: "2024-06-11T13:41:01.415Z"
+    Order:
+      properties:
+        _id:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        table:
+          type: object
+          $ref: "#/components/schemas/Table"
+        foods:
+          type: array
+          items:
+            type: object
+            $ref: "#/components/schemas/CheckFood"
+        cafe:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        user:
+          type: string
+          example: 655a35d7bd1bc32a1d44554a
+        is_approved:
+          type: boolean
+          example: true
+        createdDate:
+          type: string
+          example: 4h
+        dateDiff:
+          type: string
+          example: 14.06.2024 13:55
+        createdAt:
+          type: string
+          example: "2024-06-11T13:41:01.415Z"
     CheckFood:
       properties:
         _id:
@@ -874,37 +905,6 @@ paths:
                   message:
                     type: string
                     example: cafe did not found
-  /employer/checks:
-    get:
-      tags: [Employer]
-      description: >
-        Payment of the check
-      summary: Payment of the check
-      parameters:
-        - in: query
-          name: isPaid
-          schema:
-            type: boolean
-          description: If you want to see paid checks make it true or false otherwise it will send you all checks
-      responses:
-        "200":
-          description: It will success message if check paid successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  length:
-                    type: integer
-                    example: 3
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      $ref: "#/components/schemas/Check"
   /employer/job/{jobId}:
     get:
       tags: [Employer]
@@ -1793,57 +1793,6 @@ paths:
                     items:
                       type: object
                       $ref: "#/components/schemas/Food"
-  /check/table/{tableId}:
-    post:
-      tags: [Check]
-      description: >
-        Create or Update Check
-      summary: Create or Update Check
-      parameters:
-        - in: path
-          name: tableId
-          schema:
-            type: string
-          required: true
-          description: The id of table
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - checkFoods
-              properties:
-                checkFoods:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      food:
-                        type: string
-                        default: 665f315a9610fe06b5ce2a21
-                      quantity:
-                        type: integer
-                        default: 2
-      responses:
-        "200":
-          description: It will success message if check created or updated
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  length:
-                    type: integer
-                    example: 4
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      $ref: "#/components/schemas/Food"
   /check/{checkId}:
     get:
       tags: [Check]
@@ -1911,6 +1860,223 @@ paths:
                   message:
                     type: string
                     example: Payment done
+  /check:
+    get:
+      tags: [Check]
+      description: >
+        Payment of the check
+      summary: Payment of the check
+      parameters:
+        - in: query
+          name: isPaid
+          schema:
+            type: boolean
+          description: If you want to see paid checks make it true or false otherwise it will send you all checks
+        - in: query
+          name: sort_by_date
+          schema:
+            type: string
+          description: desc or asc
+      responses:
+        "200":
+          description: It will success message if check paid successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 3
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Check"
+  /order/{tableId}/create:
+    post:
+      tags: [Order]
+      description: >
+        Create or Update Order
+      summary: Create or Update Order
+      parameters:
+        - in: path
+          name: tableId
+          schema:
+            type: string
+          required: true
+          description: The id of table
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - foods
+              properties:
+                foods:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      food:
+                        type: string
+                        default: 665f315a9610fe06b5ce2a21
+                      quantity:
+                        type: integer
+                        default: 2
+      responses:
+        "200":
+          description: It will success message if check created or updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 4
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Food"
+  /order:
+    get:
+      tags: [Order]
+      description: >
+        Payment of the check
+      summary: Payment of the check
+      parameters:
+        - in: query
+          name: is_approved
+          schema:
+            type: boolean
+          description: If you want to see approved orders make it true or false otherwise it will send you all orders
+        - in: query
+          name: sort_by_date
+          schema:
+            type: string
+          description: desc or asc
+      responses:
+        "200":
+          description: It will success message if check paid successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  length:
+                    type: integer
+                    example: 3
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Order"
+  /order/{orderId}:
+    get:
+      tags: [Order]
+      description: >
+        Get a specific order
+      summary: Get a specific order
+      parameters:
+        - in: path
+          name: orderId
+          schema:
+            type: string
+          required: true
+          description: The id of order
+      responses:
+        "200":
+          description: Return success message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Order"
+  /order/{orderId}/approve:
+    put:
+      tags: [Order]
+      description: >
+        Owner or employees can approve the order or decline
+      summary: Owner or employees can approve the order or decline
+      parameters:
+        - in: path
+          name: orderId
+          schema:
+            type: string
+          required: true
+          description: The id of order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - is_approved
+              properties:
+                is_approved:
+                  type: boolean
+                  default: true
+              example:
+                is_approved: true
+      responses:
+        "200":
+          description: It will return a message if declined or approved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Order successfully approved
+  /order/{orderId}/cancel:
+    put:
+      tags: [Order]
+      description: >
+        Cancel the order
+      summary: Cancel the order
+      parameters:
+        - in: path
+          name: orderId
+          schema:
+            type: string
+          required: true
+          description: The id of order
+      responses:
+        "200":
+          description: It will return a message if declined or approved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Order successfully approved
   /jobs/createJob:
     post:
       tags: [Job]

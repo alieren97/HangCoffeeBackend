@@ -81,5 +81,12 @@
 		"check_paid_successfully": "Check successfully paid and closed",
 		"check_items_updated_successfully": "Items added into  table",
 		"check_created_successfully": "Check successfully created"
+	},
+	"order": {
+		"order_not_found": "Order not found",
+		"order_created_successfully": "Order created successfully",
+		"order_already_approved": "Order already approved",
+		"order_successfully_declined": "Order successfully declined",
+		"order_successfully_approved": "Order successfully approved"
 	}
 }
